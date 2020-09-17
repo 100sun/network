@@ -1,6 +1,6 @@
 # 1.1 what is the Internet?
 
-## inter + network
+### inter + network
 
 ex. mobile network, home networks, institutional networks
 
@@ -26,7 +26,7 @@ hosts => network edges => network core
 
 # 1.2 Network Edge
 
-## Access Networks
+## 1.2.1 Access Networks
 
 : make network edges(⊃ end hosts) accessible to the network
 
@@ -77,7 +77,7 @@ hosts => network edges => network core
 * wireless LANs: Wireless Fidelity(shared network)
 * wide-area wireless access(shared network)
 
-## Physical Media
+## 1.2.2 Physical Media
 
 : the physical materials that are used to store or transmit information in data communications
 
@@ -96,7 +96,7 @@ hosts => network edges => network core
     - routing: Get a path from source host to destination host using routing algorithms
     - forwarding: Move packets from the before router to the next router using forwarding table
 
-## Two fundamental approaches to moving data
+## 1.3.1 Two fundamental approaches to moving data
 
 ### comparison
 
@@ -113,7 +113,7 @@ hosts => network edges => network core
 * how? storing bits until a packet and then forwarding it
 * => [total time](##delay)
 
-## A Network of Networks
+## 1.3.2 A Network of Networks
 
 Internet = A Network (by ISP) of Networks (end system) 
 
@@ -125,7 +125,7 @@ host < access ISP < regional ISP (peering link) < Internet eXchange Point < Tier
 
 # 1.4 Evaluation Metrics in networks
 
-## delay
+## 1.4.1 delay
 
 : source~destination seconds
 
@@ -140,7 +140,7 @@ host < access ISP < regional ISP (peering link) < Internet eXchange Point < Tier
     - opt to the amount of data
 5. => end-end delay: the number of **hop** * L/R 
 
-## loss
+## 1.4.2 loss
 
 : Packet Loss Rate (<-> Packet Delivery Rate)
 
@@ -148,7 +148,7 @@ host < access ISP < regional ISP (peering link) < Internet eXchange Point < Tier
 * in a buffer when queueing delay, data > queue capacity => dropped
 * host: re-transmission, network: waste of resource, user: delay
 
-## throughput
+## 1.4.3 throughput
 
 : sum of traffic <=> how much data has been moved between server and client <Br/>
 => rate: bits/time unit
