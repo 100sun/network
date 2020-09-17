@@ -64,17 +64,26 @@ ex. mobile network, home networks, institutional networks
 0. AP, Ethernet switch
 4. Institutional link to ISP
 
+### archi
+
+| 나의 network | network core | 상대방의 network |
+| ------------- | ------------- |------------- |
+| [end host(무선단말기) ----- AP(기지국)---- edge router]| (router들) | [edge router -----end host]
+
 ## Wireless Access Networks
 
 connects an end system to the router
-wireless LANs: Wireless Fidelity(shared network)
-wide-area wireless access (cellular network)
+
+* wireless LANs: Wireless Fidelity(shared network)
+* wide-area wireless access(shared network)
 
 ### archi
 
 | 나의 network | network core | 상대방의 network |
 | ------------- | ------------- |------------- |
 | [end host(무선단말기) ----- AP(기지국)---- edge router]| (router들) | [edge router -----end host]
+
+## Physical Media
 
 ## links
 

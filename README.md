@@ -3,7 +3,7 @@
 <details>
   <summary>class info</summary>
 
-## scoring
+### scoring
 
 * exam 40, 40 
 * hw(problems, review) 10 
