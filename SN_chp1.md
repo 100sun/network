@@ -30,8 +30,6 @@ hosts => network edges => network core
 
 : make network edges(⊃ end hosts) accessible to the network
 
-* connects an end system to edge router
-
 ### archi
 
 | my network | network core | my network |
@@ -62,16 +60,12 @@ hosts => network edges => network core
 
 ### Home Network
 
-**shared** access network 
-
 0. cable or DSL modem, ONT -> splitter
 1. Fiber To The Home
 2. (central office) Headend
 4. Internet Service Provider
 
 ### Enterprise / Institutional Network
-
-**dedicated** access network 
 
 0. AP, Ethernet switch
 4. Institutional link to ISP
