@@ -30,7 +30,14 @@ hosts => network edges => network core
 
 : make network edges(⊃ end hosts) accessible to the network
 
-* connects an end system to the first router (also known as the "edge router")
+* connects an end system to edge router
+
+### archi
+
+| my network | network core | my network |
+| ------------- | ------------- |------------- |
+| [end host(wireless) --(wireless)--- AP --(wire)-- edge router]| (routers) | [edge router -----end host]
+
 * transmission rate: bandwidth(bps) ⬆ internet speed ⬆
 * (central office) shared / dedicated
 
@@ -55,7 +62,7 @@ hosts => network edges => network core
 
 ### Home Network
 
-**dedicated** access network 
+**shared** access network 
 
 0. cable or DSL modem, ONT -> splitter
 1. Fiber To The Home
@@ -75,20 +82,23 @@ hosts => network edges => network core
 | ------------- | ------------- |------------- |
 | [end host(무선단말기) ----- AP(기지국)---- edge router]| (router들) | [edge router -----end host]
 
-## Wireless Access Networks
+### Wireless Access Networks
 
-connects hosts to the router
+**shared** access network 
 
 * wireless LANs: Wireless Fidelity(shared network)
 * wide-area wireless access(shared network)
 
-### archi
-
-| 나의 network | network core | 상대방의 network |
-| ------------- | ------------- |------------- |
-| [end host(무선단말기) ----- AP(기지국)---- edge router]| (router들) | [edge router -----end host]
-
 ## Physical Media
+
+: the physical materials that are used to store or transmit information in data communications
+
+* guided: wired
+    - Twisted-pair cable: copper wires, behind the ethernet
+    - Coaxial cable: copper conductor, broadband
+    - Fiber-optic Cable: high speed, low error rate
+* unguided: wireless
+    - radio link types
 
 # 1.3 Network Core
 
@@ -152,11 +162,12 @@ host < access ISP < regional ISP (peering link) < Internet eXchange Point < Tier
 
 ## throughput
 
-: sum of traffic in unit time
+: sum of traffic <=> how much data has been moved between server and client <Br/>
+=> rate: bits/time unit
 
-* rate = bits / time unit
 1. instantaneous: throughput at the peak
 2. average: throughput on the average 
+    - end-end average throughput == bottleneck link == min(**R<sub>s</sub>, R<sub>c</sub>**, R/10)
 
 # 1.5 protocol layers, service models
 
