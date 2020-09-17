@@ -30,7 +30,7 @@ hosts => network edges => network core
 
 : make network edges(⊃ end hosts) accessible to the network
 
-### archi
+### architecture
 
 | my network | network core | my network |
 | ------------- | ------------- |------------- |
@@ -69,12 +69,6 @@ hosts => network edges => network core
 
 0. AP, Ethernet switch
 4. Institutional link to ISP
-
-### archi
-
-| 나의 network | network core | 상대방의 network |
-| ------------- | ------------- |------------- |
-| [end host(무선단말기) ----- AP(기지국)---- edge router]| (router들) | [edge router -----end host]
 
 ### Wireless Access Networks
 
