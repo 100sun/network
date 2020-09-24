@@ -159,6 +159,21 @@ host < access ISP < regional ISP (peering link) < Internet eXchange Point < Tier
 
 # 1.5 protocol layers, service models
 
+## Internet protocol stack
+
+| 5 layers | explanation | protocol | encapsulation | controlled by | 
+| ------- | ------- | -----|-----|-----|
+| [application](./SN_chp2.md) | support network application | FTP, SMTP, HTTP | message | user(app developer) |
+| **transport** | data transfer process <-> process | TCP, UDP | + segment | OS | 
+| **network** | find path | IP, routing protocols | + datagram |OS | 
+| **link** | data transfer by hop from source to destination | Ethernet, WiFi | + frame |OS | 
+| **physical** | on the wire like cable, radio | bits | Protocol Data Unit |OS | 
+
+* layering: modularization -> maintenance, system update
+* encapsulation: message + headers..
+    - source -> **switch**(link+physical) -> **router**(network+link+physical) -> destination(only *message + segment* are from source)
+    -  always start from physical layer and go up by figuring out the needed info by the headers
+
 # 1.6 networks under attack: security
 
 # 1.7 history
