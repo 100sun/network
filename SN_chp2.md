@@ -31,7 +31,7 @@ for http message to web server
 
 ## Internet transport protocols services
 
-| Transport layer protocols | provice O | provide X |
+| Transport layer protocols | ~ | provice O | provide X |
 | ------ |------ |------ | ---- |
 | TCP | reliable | error, flow, congestion control| minimum throughput guarantee, timing, security |
 | UDP | unreliable |  ~ | reliability, flow, congestion control |
