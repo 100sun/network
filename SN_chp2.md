@@ -1,4 +1,4 @@
-# 2.1 principles of network applications
+# 2.1 principles of network **applications**
 
 network apps(ex. gmail, youtube, zoom, game) work only on **end systems**
 
@@ -21,7 +21,23 @@ for http message to web server
 
 * well known port numbers: 80(HTTP), 25(mail)
 
-## Transport Service Requirements
+## Protocol
+
+### application layer protocol 
+
+* open protocols: SMTP, HTTP, FTP, Telnet
+* proprietary protocols: skype
+
+#### App-layer protocol defines
+
+1. type: request/response message
+2. syntax: fields of message
+3. semantics: how to interpret fields
+4. rules
+
+### underlying transport protocol
+
+#### Transport Service Requirements
 
 | Transport Service | kinds of app | for | 
 | ------ |------ |------ |
@@ -29,19 +45,17 @@ for http message to web server
 | **timing** | Internet telephony, interactive games | time sensitive<Br/>(<-> delay) |
 | **throughput** | multimedia | minimum throughput<br/>(<-> elastic) | 
 
-## Internet transport protocols services
+#### Internet transport protocols services
 
-| Transport layer protocols | ~ | provice O | provide X |
+| Transport layer protocols | + | - | occasion |
 | ------ |------ |------ | ---- |
-| TCP | reliable | error, flow, congestion control| minimum throughput guarantee, timing, security |
-| UDP | unreliable |  ~ | reliability, flow, congestion control |
+| **TCP** | reliable | complex -> low speed | email, web, file transfer |
+| UDP | fast speed | unreliable | one-time transaction<br/>: streaming multimedia, internet telephony |
 
-## App-layer protocol defines
-
-1. type
-2. syntax
-3. semantics
-4. rules
+* TCP service: connection-oriented by handshaking
+    - error control: ~until no data error
+    - flow control: sender considers receiver's data capability
+    - congestion control: no data overload in router/switch
 
 # 2.2 Web and HTTP
 
