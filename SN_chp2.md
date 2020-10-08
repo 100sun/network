@@ -59,6 +59,15 @@ for http message to web server
 
 # 2.2 Web and HTTP
 
+## Web
+
+webpage ⊃ lots of objects <br/>
+=> base html file : frame of webpage ⊃ url referencing objects
+
+## HTTP
+
+HyperText Transfer Protocol 
+
 # 2.3 electronic mail (SMTP, POP3, IMAP)
 
 # 2.4 DNS
