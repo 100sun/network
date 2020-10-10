@@ -111,7 +111,7 @@ hosts => network edges => network core
 
 * app in source Host ---link(by packets)---> app in destination Host
 * how? storing bits until a packet and then forwarding it
-* => [total time](##delay)
+* => [total time](#delay)
 
 ## 1.3.2 A Network of Networks
 
@@ -262,7 +262,7 @@ for http message to web server
 ### non-persistent HTTP 
 
 1. first object
-    1. 1RTT for tcp connection request/response: new *TCP connection [socket](##Socket)* created to initiate tcp connection
+    1. 1RTT for tcp connection request/response: new *TCP connection [socket](#Socket)* created to initiate tcp connection
     2. 1RTT for http request(URL)/response(base HTML file: file transmission time): that socket deleted to *terminate* tcp connection
 2. second object: 2RTT + file transmission time
 
@@ -298,7 +298,7 @@ for http message to web server
 
 1. field name + : + value + cr + lf
     - ex. Host: www.github.com\r\n
-    - ex. user-agent, accept-language, keep-alive([how long](###persistent-HTTP))
+    - ex. user-agent, accept-language, keep-alive([how long](#persistent-HTTP))
 2. cr + lf (end of header lines)
     - ex. \r\n
 
@@ -326,7 +326,7 @@ web caches = proxy server
 
 ### why?
 
-overhead of origin server [in](###hierarchy-structure)
+overhead of origin server [in](#hierarchy-structure)
 
 ### HTTP request/response
 
@@ -342,7 +342,7 @@ overhead of origin server [in](###hierarchy-structure)
 * data rate from origin servers to browsers 
     - object size * request rate
     - 0.1 Mbits * 15/s = 1.50Mbps
-* ***[access](###121-Access-Networks) link rate***
+* ***[access](#121-Access-Networks) link rate***
     - 1.45Mbps
 
 #### consequences
@@ -356,7 +356,7 @@ overhead of origin server [in](###hierarchy-structure)
 3. total delay 
     - RTT from institutional router to origin servers
         - 2s 
-    - ***[access delay](##141-delay)***
+    - ***[access delay](#141-delay)***
         - access link rate / date rate
         - 1.5Mbps / 1.54Mbps ≈ 1 → ∞ = ***minutes***
     - LAN delay
