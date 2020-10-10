@@ -164,7 +164,7 @@ host < access ISP < regional ISP (peering link) < Internet eXchange Point < Tier
 
 | 5 layers | explanation | protocol | encapsulation | controlled by | 
 | ------- | ------- | -----|-----|-----|
-| [application](#2.1-principles-of-network-applications) | support network application | [HTTP](#2.2-Web-and-HTTP), [SMTP](#2.3-electronic-mail), DNS(#2.4-DNS), FTP | message | user(app developer) |
+| [application](#21-principles-of-network-applications) | support network application | [HTTP](#22-Web-and-HTTP), [SMTP](#23-electronic-mail), DNS(#24-DNS), FTP | message | user(app developer) |
 | **transport** | data transfer process <-> process | TCP, UDP | + segment | OS | 
 | **network** | find path | IP, routing protocols | + datagram |OS | 
 | **link** | data transfer by hop from source to destination | Ethernet, WiFi | + frame |OS | 
@@ -188,7 +188,8 @@ network apps(ex. gmail, youtube, zoom, game) work only on **end systems**
 
 ## Socket
 
-door: application -> (socket) -> transport -> ...
+* A network socket is a software structure within a network node of a computer network that serves as an endpoint for *sending and receiving data across the network*.
+* door: application -> (socket) -> transport -> ...
 
 ## Addressing Processes
 
@@ -200,11 +201,9 @@ for http message to web server
 
 ## Protocol
 
-### protocol by application
-
 * email: SMTP > TCP
 * remote terminal access: Telnet > TCP
-* [Web](##Web): HTTP > TCP
+* [web](#22-Web-and-HTTP): HTTP > TCP
 * file transfer: FTP > TCP
 
 ### application layer protocol 
@@ -252,7 +251,6 @@ for http message to web server
 * Round Trip Time
 * Uniform Resource Locator
 * Carriage Return, Line Feed
-* A network socket is a software structure within a network node of a computer network that serves as an endpoint for *sending and receiving data across the network*.
 
 </details>
 
@@ -264,7 +262,7 @@ for http message to web server
 ### non-persistent HTTP 
 
 1. first object
-    1. 1RTT for tcp connection request/response: new *TCP connection socket* created to initiate tcp connection
+    1. 1RTT for tcp connection request/response: new *TCP connection [socket](##Socket)* created to initiate tcp connection
     2. 1RTT for http request(URL)/response(base HTML file: file transmission time): that socket deleted to *terminate* tcp connection
 2. second object: 2RTT + file transmission time
 
@@ -344,7 +342,7 @@ overhead of origin server [in](###hierarchy-structure)
 * data rate from origin servers to browsers 
     - object size * request rate
     - 0.1 Mbits * 15/s = 1.50Mbps
-* ***[access](###1.2.1-Access-Networks) link rate***
+* ***[access](###121-Access-Networks) link rate***
     - 1.45Mbps
 
 #### consequences
@@ -358,7 +356,7 @@ overhead of origin server [in](###hierarchy-structure)
 3. total delay 
     - RTT from institutional router to origin servers
         - 2s 
-    - ***[access delay](##1.4.1-delay)***
+    - ***[access delay](##141-delay)***
         - access link rate / date rate
         - 1.5Mbps / 1.54Mbps ≈ 1 → ∞ = ***minutes***
     - LAN delay
