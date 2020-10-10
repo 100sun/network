@@ -164,7 +164,7 @@ host < access ISP < regional ISP (peering link) < Internet eXchange Point < Tier
 
 | 5 layers | explanation | protocol | encapsulation | controlled by | 
 | ------- | ------- | -----|-----|-----|
-| [application](#2.1-principles-of-network-**applications**) | support network application | [HTTP](#2.2-Web-and-HTTP), [SMTP](#2.3-electronic-mail), DNS(#2.4-DNS), FTP | message | user(app developer) |
+| [application](#2.1-principles-of-network-applications) | support network application | [HTTP](#2.2-Web-and-HTTP), [SMTP](#2.3-electronic-mail), DNS(#2.4-DNS), FTP | message | user(app developer) |
 | **transport** | data transfer process <-> process | TCP, UDP | + segment | OS | 
 | **network** | find path | IP, routing protocols | + datagram |OS | 
 | **link** | data transfer by hop from source to destination | Ethernet, WiFi | + frame |OS | 
@@ -175,7 +175,7 @@ host < access ISP < regional ISP (peering link) < Internet eXchange Point < Tier
     - source -> **switch**(link+physical) -> **router**(network+link+physical) -> destination(only *message + segment* are from source)
     -  always start from physical layer and go up by figuring out the needed info by the headers
 
-# 2.1 principles of network **applications**
+# 2.1 principles of network applications
 
 network apps(ex. gmail, youtube, zoom, game) work only on **end systems**
 
