@@ -350,7 +350,7 @@ overhead of origin server [in](#hierarchy-structure)
 1. LAN utilization
     - data rate / LAN availability
     - 1.5Mbps / 1Gbps = 0.15%
-2. ***access link utilization ***
+2. ***access link utilization***
     - access link rate / date rate
     - 1.5Mbps / 1.54Mbps = 0.99%
 3. total delay 

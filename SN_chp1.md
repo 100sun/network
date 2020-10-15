@@ -169,11 +169,7 @@ host < access ISP < regional ISP (peering link) < Internet eXchange Point < Tier
 | **link** | data transfer by hop from source to destination | Ethernet, WiFi | + frame |OS | 
 | **physical** | on the wire like cable, radio | bits | Protocol Data Unit |OS | 
 
-* layering: modularization -> maintenance, system update
+* layering: modulerarization -> maintenance, system update
 * encapsulation: message + headers..
     - source -> **switch**(link+physical) -> **router**(network+link+physical) -> destination(only *message + segment* are from source)
     -  always start from physical layer and go up by figuring out the needed info by the headers
-
-# 1.6 networks under attack: security
-
-# 1.7 history
