@@ -709,20 +709,6 @@ receiver
 
 but if it gets errors from both 1 and 0 -> there is no way to check error
 
-``` cpp
-while(byte>0)  //len = Total num of bytes
-{
-    Checksum = ((Buf[i]<<8) + Buf[i+1]) + Checksum; //get two bytes at a time and  add previous calculated checsum value
-
-    len -= 2; //decrease by 2 for 2 byte boundaries
-    i += 2;
-}
-
- Checksum = (Checksum>>16) + Checksum; //Add the carryout
-
- Checksum = (unsigned int)~Checksum;
-```
-
 # 3.4 principles of reliable data transfer
 
 ## reliable data transfer means..
