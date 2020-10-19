@@ -27,9 +27,14 @@
 
 ## notes
 
+# Chapter 1 Computer Networks and the Internet 
+
 # 1.1 what is the Internet?
 
 ### inter + network
+
+* Network of networks
+* connection between networks
 
 ex. mobile network, home networks, institutional networks
 
@@ -51,58 +56,66 @@ ex. mobile network, home networks, institutional networks
     - ex. message format, order, action
 
 <hr/>
-hosts => network edges => network core
+
+# Overview
+
+network edge(end host->AP->edge router) ---(link)---> network core(router->ISP) => network edge
+
+* [network edge](#12-network-edge) ⊃ end hosts ⊃ clients and servers
+* [network core](#13-network-core): connects edges ⊃ interconnected devices: routers, switches
+* [physical media](#122-physical-media): wired, wireless communication links
 
 # 1.2 Network Edge
 
 ## 1.2.1 Access Networks
 
-: make network edges(⊃ end hosts) accessible to the network
-(ISP connects public internet and Local Area Network making an access link )
+### when
 
-### architecture
+1. when end hosts want to access to the internet -> firstly access to "access network"
+2. then "access networks" also connects with edge router so that make end hosts be connected
+* ex. mobile access network, residential access network, institutional  access network
 
-| my network | network core | my network |
-| ------------- | ------------- |------------- |
-| [end host(wireless) --(wireless)--- AP --(wire)-- edge router]| (routers) | [edge router -----end host]
+### features
 
 * transmission rate: bandwidth(bps) ⬆ internet speed ⬆
 * (central office) shared / dedicated
 
-### Digital Subscriber Line
+### ex1. Digital Subscriber Line
 
 **dedicated** access network 
 
 0. DSL modem -> splitter
-1. **DSL phone line**
+1. **DSL ph1 line**
 2. (central office) DSL Access Multiplexer
-3. voice(~4kHz): telephone network | data(4kHz~): Internet Service Provider
+3. voice(~4kHz): teleph1 network | data(4kHz~): Internet Service Provider
 
-### Cable Network
+### ex2. Cable Network
 
 **shared** access network 
 
 0. cable modem -> splitter
-1. **coaxial cable**: cable company provide one signal to multiple users
+1. **coaxial cable**: cable company provide 1 signal to 多 users
 2. (central office) Cable Modem Termination System
 3. Hybrid Fiber Coax
 4. Internet Service Provider
 
-### Home Network
+### ex3. Home Network
 
 0. cable or DSL modem, ONT -> splitter
 1. Fiber To The Home
 2. (central office) Headend
 4. Internet Service Provider
 
-### Enterprise / Institutional Network
+### ex4. Enterprise / Institutional Network
 
 0. AP, Ethernet switch
 4. Institutional link to ISP
 
-### Wireless Access Networks
+### ex5. Wireless Access Networks
 
-**shared** access network 
+| my network | network core | my network |
+| ------------- | ------------- |------------- |
+| [end host(wireless) --(wireless)--- AP --(wire)-- edge router]| (routers) | [edge router -----end host]
 
 * wireless LANs: Wireless Fidelity(shared network)
 * wide-area wireless access(shared network)
@@ -120,11 +133,11 @@ hosts => network edges => network core
 
 # 1.3 Network Core
 
-* connecting network edges(⊃ end hosts) 
+* connecting network edges
 * the mesh of interconnected routers
 * when sending packets, forwarding from a router to the next router
-    - routing: Get a path from source host to destination host using routing algorithms
-    - forwarding: Move packets from the before router to the next router using forwarding table
+    - routing: Get a path from source host -> destination host by using routing algorithms
+    - forwarding: Move packets from the before router -> the next router by using forwarding table
 
 ## 1.3.1 Two fundamental approaches to moving data
 
@@ -132,14 +145,15 @@ hosts => network edges => network core
 
 | circuit switching | packet switching |
 | ---------------- | ---------------- |
-| call setup, resource reservation<br/> : the resources needed along a path | No call setup, no resource reservation |
-| multiple users sharing a link<br/> by Frequency Division Multiplexing , Time Division Multiplexing | full link capacity<br/> by dividing into small packets which have their own each destination address<br/> using store-and-forward transmission |
-| low speed | 3.5x users but after it.. low Quality Of Service |
-| in telephone networks | ~ |
+| call setup, resource reservation<br/> : the resources needed along a path | no call setup, no resource reservation |
+| 多 users sharing a link<br/> by Frequency Division Multiplexing , Time Division Multiplexing | full link capacity<br/> by dividing into small packets which have their own each destination address<br/> using store-and-forward transmission |
+| low speed | 3.5x users but after it.. low Quality of Service |
+| in telephone networks | |
 
 ### store-and-forward transmission
 
-* app in source Host ---link(by packets)---> app in destination Host
+app in source Host ----link(by packets)----> app in destination Host
+
 * how? storing bits until a packet and then forwarding it
 * => [total time](#delay)
 
@@ -156,20 +170,33 @@ host < access ISP < regional ISP (peering link) < Internet eXchange Point < Tier
 
 # 1.4 Evaluation Metrics in networks
 
+delay, packet loss, throughput
+
 ## 1.4.1 delay
 
-: source~destination seconds
+To deliver a packet<Br/>
+: (1 HOP) source => nodal processing -> queueing -> transmission -> propagation => destination
 
-1. nodal **processing** delay: before forwarding a packet, should check its error and destination address
-    - opt to the quality of router
-2. **queueing** delay: when forwarding one packet, the other packet should wait in a buffer.
-    - opt to the number of network users => so variable
-    - **traffic intensity** = La/R ↑ ~1 infinite<br/> when packet arrival rate(packet/sec) > output link capacity(L/R) <br/> <=> over the queue -> dropped
-3. **transmission** to the link delay when starting to forward: A host send a packet of ***L bits*** over a link with transmission rate ***R bits/sec***, then the time to transmit the packet is ***L/R sec***.  (link transmission rate = link capacity = link bandwidth)
-    - opt to bandwidth of output link
-4. **propagation** delay in the link: time = length / speed
-    - opt to the amount of data
-5. => end-end delay: the number of **hop** * L/R 
+* N = no. of packets
+* M = no. of hops
+* L bits = size of packet
+* R bps = bandwidth of the link
+* D meters = distance = length of physical link
+* A packet/sec = average packet arrival rate 
+
+1. **processing** delay: before forwarding a packet, should check *bits error and destination address* in the packet header
+    - d<sub>proc</sub> -> opt to the quality of router
+2. **queueing** delay: Time a job waits in a queue until it can be executed 
+    - d<sub>queue</sub> -> opt to the number of network users(= traffic intensity = ***La/R***)
+        - La/R ≈ 0 -> small / La/R ≈ 1 -> large / La/R > 1 ≈ *infinite* => so variable
+3. **transmission**: Time taken to put a packet onto link (link transmission rate = link capacity = link bandwidth)
+    - d<sub>trans</sub> = data size / bandwidth = ***L/R sec*** -> opt to bandwidth of output link
+4. **propagation**: Time taken to reach the destination from the start point for bits
+    - d<sub>prop</sub> = distance / transmission speed = ***D / s***(L/R) -> opt to the amount of data
+
+=> End-To-End ≈ (M + N) * L/R
+
+<img src="https://media.geeksforgeeks.org/wp-content/uploads/queing-delay.jpg" height="300"/>
 
 ## 1.4.2 loss
 
@@ -192,11 +219,11 @@ host < access ISP < regional ISP (peering link) < Internet eXchange Point < Tier
 
 ## Internet protocol stack
 
-| 5 layers | explanation | protocol | encapsulation | controlled by | 
+| 5 layers | explanation | protocol | encapsulation | controlled by | how to communicate | 
 | ------- | ------- | -----|-----|-----|
-| [application](#21-principles-of-network-applications) | support network application | [HTTP](#22-Web-and-HTTP), [SMTP](#23-electronic-mail), [DNS](#24-DNS), FTP | message | user(app developer) |
-| **transport** | data transfer process <-> process | TCP, UDP | + segment | OS | 
-| **network** | find path | IP, routing protocols | + datagram |OS | 
+| [application](#21-principles-of-network-applications) | support network application | [HTTP](#22-Web-and-HTTP), [SMTP](#23-electronic-mail), [DNS](#24-DNS), FTP | message | user(app developer)| uses [socket](#Socket) API to communicate |
+| [**transport**](#31-transport-layer-services) | data transfer process <-> process | TCP, UDP | + segment | OS | logical communication between processes |
+| **network** | find path | IP, routing protocols | + datagram |OS|logical communication between hosts|
 | **link** | data transfer by hop from source to destination | Ethernet, WiFi | + frame |OS | 
 | **physical** | on the wire like cable, radio | bits | Protocol Data Unit |OS | 
 
@@ -218,8 +245,8 @@ network apps(ex. gmail, youtube, zoom, game) work only on **end systems**
 
 ## Socket
 
-* A network socket is a software structure within a network node of a computer network that serves as an endpoint for *sending and receiving data across the network*.
-* door: application -> (socket) -> transport -> ...
+* A network socket is a set of APIs for *sending and receiving data across the network*.
+* like a door: application -> (socket) -> transport -> ...
 
 ## Addressing Processes
 
@@ -235,12 +262,13 @@ for http message to web server
 * remote terminal access: Telnet > TCP
 * [web](#22-Web-and-HTTP): HTTP > TCP
 * file transfer: FTP > TCP
+* [DNS](#24-DNS) > UDP
 
 |HTTP|SMTP|
 |---|---|
 |port|80|25|
 |object<->data|pull|push|
-|in 1 response message|1 object|multiple objects|
+|in 1 response message|1 object|多 objects|
 |interaction| command(ASCII) + response(status code+phrase)||
 |in transport layer|use [TCP](#Internet-transport-protocols-services) connection ∵ reliability||
 
@@ -249,7 +277,7 @@ for http message to web server
 * open protocols: SMTP, HTTP, FTP, Telnet
 * proprietary protocols: skype
 
-#### App-layer protocol defines
+#### defines
 
 1. type: request/response message
 2. syntax: fields of message
@@ -258,7 +286,7 @@ for http message to web server
 
 ### underlying transport protocol
 
-#### Transport Service Requirements
+#### requirements
 
 | Transport Service | kinds of app | for | 
 | ------ |------ |------ |
@@ -266,14 +294,14 @@ for http message to web server
 | **timing** | Internet telephony, interactive games | time sensitive<Br/>(<-> delay) |
 | **throughput** | multimedia | minimum throughput<br/>(<-> elastic) | 
 
-#### Internet transport protocols services
+#### types
 
-| Transport layer protocols | + | - | occasion |
+| Transport layer protocols | reliability | speed | occasion |
 | ------ |------ |------ | ---- |
-| **TCP** | reliable | complex -> low speed | email, web, file transfer |
-| UDP | fast speed | unreliable | one-time transaction<br/>: streaming multimedia, internet telephony |
+| [TCP](#35-TCP) | reliable ∵ in-order delivery| low speed | email, web, file transfer |
+| [UDP](#33-UDP) | unreliable ∵ unordered delivery| fast speed | streaming multimedia, internet telephony(one-time transaction) |
 
-* TCP service: connection-oriented by handshaking
+* TCP: connection-oriented service by handshaking
     - error control: ~until no data error
     - flow control: sender considers receiver's data capability
     - congestion control: no data overload in router/switch
@@ -286,7 +314,7 @@ for http message to web server
 #### word
 
 * HyperText Transfer Protocol 
-* Round Trip Time
+* RoundTripTime
 * Uniform Resource Locator
 * Carriage Return, Line Feed
 
@@ -367,30 +395,26 @@ client can keep user session state in cookie file ex. my id in ebay, amazon
 
 #### assumptions
 
-* data rate from origin servers to browsers: 1.50Mbps
-  + object size * request rate
-  + 0.1 Mbits * 15/s = 1.50Mbps
-* ***[access](#121-Access-Networks) link rate***: 1.45Mbps
+* data rate from origin servers to browsers = object size * request rate = 0.1 Mbits * 15/s = 1.50Mbps
+* ***access link rate***: 1.45Mbps
 
 #### consequences
 
-* LAN utilization
-    - data rate / LAN availability
-    - 1.5Mbps / 1Gbps = 15%
-* ***access link utilization***: <= 70: fine
-  + access link rate / date rate
-  + 1.5Mbps / 1.54Mbps = 99%
+Utilization
+
+* U<sub>LAN</sub> = data rate / LAN availability = 1.5Mbps / 1Gbps = 15%
+* ***U<sub>access link</sub>*** = access link rate / date rate = 1.5Mbps / 1.54Mbps = 99%
 
 #### total delay
 
-* Internet delay = RTT from institutional router to origin servers: 2s
-* ***[access delay](#141-delay)*** = queueing delay
-  + access link rate / date rate
-  + 1. 1.5Mbps / 1.54Mbps ≈ 1 → ∞ = ***minutes***
-* LAN delay: μs
+* Internet delay = RTT from institutional router to origin servers ≈ 2s
+* ***[Access delay](#141-delay)*** = queueing delay = access link rate / date rate = 1.5Mbps / 1.54Mbps ≈ 1 → ∞ ~ ***minutes***
+* LAN delay = μs
 
 => total delay: 2s + ms + μs ≈ >m
-(increase access link bandwidth)
+
+(+ increase access link bandwidth)
+
 => total delay: 2s + ms + μs ≈ >2s
 
 ### 2. origin server + local web cache
@@ -402,15 +426,13 @@ cache hit rate: 0.4
 #### consequences
 
 * 40% requests satisfied at proxy servers
-  + 0.4 * μs(delay in LAN) 
+  + LAN delay = 0.4 * μs 
 * 60% requests satisfied at origin servers
-  + data rate from origin servers to browsers<br/>: 1.5Mbps * 0.6 = 0.9Mbps
-  + access link utilization<br/>: 99% * 0.6 = 58%
-  + RTT from institutional router to origin servers<Br/>: 2s * 0.6
-  + access delay<br/>: ≈ 0 ∵ access link utilization is less than 0.7
-  + LAN delay<br/>: μs
-
-#### total delay
+  + data rate = 1.5Mbps * 0.6 = 0.9Mbps
+  + U<sub>access link</sub> = 99% * 0.6 = 58%
+  + Internet delay = 2s * 0.6
+  + Access delay ≈ 0 ∵ U<sub>access link</sub> is less than 0.7 -> it's fine
+  + LAN delay = μs
 
 => total delay = 2s * 0.6 + μs * 0.4 ≈ >1.2s
 
@@ -472,7 +494,7 @@ Mail access protocol
 |POP3|IMAP|
 |---|---|
 |Post Office Protocol ver3|Internet Access Protocol|
-|*download & delete* mode(cannot re-read)<br/>*download & keep* mode(copies on different clients)<br/>=>terminate TCP connection|*keep *all messages in one server<br/>=>keep TCP connection|
+|*download & delete* mode(cannot re-read)<br/>*download & keep* mode(copies on different clients)<br/>=>terminate TCP connection|*keep *all messages in 1 server<br/>=>keep TCP connection|
 |*No* mail folder organization|Allows user to organize messages in *folders*|
 |*stateless* across sessions|*keep* user state across sessions|
 
@@ -489,7 +511,7 @@ Domain Name System
 * mapping service: hostname -> (DNS) -> IP address (32 bit)
 * host aliasing: alias name(typed URL) -> (DNS) -> canonical name(real URL)
 * mail server aliasing
-* load distribution: replicated Web servers(many IP addresses correspond to one hostname) ∵ scaling
+* load distribution: replicated Web servers(many IP addresses correspond to 1 hostname) ∵ scaling
 
 ## how DNS works 
 
@@ -498,7 +520,7 @@ Domain Name System
 
 ### by iterated query
 
-: between local DNS server and one of DNS hierarchy servers
+: between local DNS server and 1 of DNS hierarchy servers
 
 1. client -> local DNS server -> IP address => client: access to that IP address
 2. client -> *local DNS server <-> DNS hierarchy* => client: access to that IP address
@@ -521,14 +543,252 @@ Domain Name System
 
 ## Pure P2P architecture
 
-different from client-server architecture
-
+* A peer can be both client and server 
 * no need for always-on server
-* arbitrary end systems directly communicate (A peer can be either client or server)
 * changing IP addresses
 * good scalability
-* e.g. file distribution(BitTorrent), Streaming (KanKan)
+* e.g. [BitTorrent](#BitTorrent), VoIP (Skype) 
 
- VoIP (Skype) 
+## File distribution
+
+how much time to distribute file (size F) from 1 server to N peers?: max{}
+
+* u<sub>s</sub>: server upload capacity
+* u<sub>i</sub>: peer i upload capacity
+* d<sub>i</sub>: peer i download capacity
+
+### by [app structure](#App-Structure)
+
+||client-server|P2P|
+||1 server -> N clients|1 serer -> 1 client, N peers -> N clients(redistribute)|
+|upload|**N**F/u<sub>s</sub>|F/u<sub>s</sub>, **N**F/(u<sub>s</sub>+ SUM**u<sub>i</sub>**)|
+|download|F/d<sub>min</sub>|F/d<sub>min</sub>|
+|graph|steeply linear|steadily curved(assisting the server)|
+
+**varied** ∵ Num of client can be varied
+
+### BitTorrent
+
+#### requesting chunks:
+
+1. file divided into 256Kb chunks
+2. asks chunks list to each peer
+3. rarest first
+
+#### sending chunks
+
+: tit-for-tat
+
+1. every 30 secs: A peer randomly selects B peer, starts sending chunks to B peer
+2. every 10 secs: B peer updates its top 4 providers, starts sending chunks to A peer
+3. A peer updates its top 4 providers
 
 # 2.6 video streaming and content distribution networks
+
+how to stream content (selected from millions of videos) to hundreds of thousands of simultaneous users?
+
+1. mega server: doesn't scale
+2. [store/serve 多 copies of videos at 多 geographically distributed sites](#CDN)
+
+## CDN
+
+Content Distribution Networks
+how does CDN DNS select "good" CDN node to stream to client
+-> let client decide
+
+1. give client a list of several CDN servers
+2. client picks "best"
+
+### Netflix
+
+1. Netflix uploads studio master to Amazon cloud
+2. create 多 version of movie (different endodings) in cloud
+3. upload versions from cloud to CDNs(Akami, limelight, level-3 CDN)
+
+1. when client requests(browses) video
+2. cloud returns the manifest file addressing three 3rd party CDNs host/stream Netflix content
+3. client requests HTTP to 1 of CDN
+4. CDN sends streaming 
+
+# 3.1 transport-layer services
+
+### transport-layer VS network-layer
+
+logical communication between...
+
+* processes: p1, p2 <-> p1, p2: transport layer
+* hosts: source <-> destination: network layer
+
+### TCP VS UDP 
+
+[here](#types)
+
+# 3.2 Multiplexing and Demultiplexing
+
+## mux and demux
+
+|Multiplexing|Demultiplexing|
+|sender|receiver|
+|source|destination|
+|add transport header|use header info|
+|send data from 多 sockets to 1 transport segment|deliver 1 received segment to 多 sockets|
+
+### demux ex
+
+||connetionless demux|connection-oriented demux|
+|ex|UDP|TCP|
+|to direct segment to appropriate socket|destination IP address<br/>destination port #|source, dest IP address<br/>source, dest port number|
+|application<->transport|no handshaking<br/>- 1 app > 1 process > 1 socket|handshaking : making its own socket for 1 specific client<br/>- 1 app > 多 processes(by fork: p4->p5, p6) > 多 sockets<br/>- 1 app > 1 process > 多 threads > 多 sockets|
+|transport<->network|1 IP datagram (> IP address) > 1 transport-layer segment (>  port number)||
+
+## segment format
+
+32 bits
+
+* transport header:
+    - source port # / dest port #
+    - other header fields
+* transport payload:
+    - application data
+
+# 3.3 UDP
+
+**connectionless** transport
+
+## User Datagram Protocol
+
+* no handshaking = no need for the connection = connectionless
+* each UDP segment handled independently of others = delivered out-of-order = can be lost
+* unreliable, best speed
+* UDP use: streaming multimedia apps, DNS, high-reliability required apps(add reliability at application layer)
+
+## advs of UDP
+
+1. no connection establishment => no delay -> save 1 RTT
+2. simple: no need to save connection state at sender, receiver => fast speed
+3. only mux and demux services => small header size -> 40% of TCP header
+4. no congestion control(resolve data overload in router/switch) => UDP can blast away as fast as desired
+
+## UDP segment format
+
+32 bits
+
+* (8bytes)transport header:
+    - (16bit)source port # / (16bit)dest port #
+    - (16bit)length / (16bit)checksum
+* transport payload:
+    - application data
+
+### length
+
+= 8 bytes + length of payload 
+
+### checksum
+
+: detect bit error in transmitted  => drop || alert to app
+
+#### how to make checksum
+
+sender
+
+1. all the segment data / 16bit
+2. add the first two 16-bit data
+3. wraparound it and get sum (add the first digit to the last digit)
+    - iterate until the end of data
+4. 1's complement of the total sum
+5. => checksum
+
+receiver
+
+1. all the segment data / 16bit
+2. add the first two 16-bit data
+3. wraparound it and get sum (add the first digit to the last digit)
+    - iterate until the end of data
+4. add checksum filed to the total sum
+5. => result == 1111...111 -> no error
+
+but if it gets errors from both 1 and 0 -> there is no way to check error
+
+``` cpp
+while(byte>0)  //len = Total num of bytes
+{
+    Checksum = ((Buf[i]<<8) + Buf[i+1]) + Checksum; //get two bytes at a time and  add previous calculated checsum value
+
+    len -= 2; //decrease by 2 for 2 byte boundaries
+    i += 2;
+}
+
+ Checksum = (Checksum>>16) + Checksum; //Add the carryout
+
+ Checksum = (unsigned int)~Checksum;
+```
+
+# 3.4 principles of reliable data transfer
+
+## reliable data transfer means..
+
+there could be error under the network layer but *transport layer* makes *app layer* to feel that there is *no error*
+
+## error type
+
+sender <-> receiver
+
+### bit error
+
+: can be resolved by *checksum*
+
+* no error) receiver sends *ACK*nowledgement to the received packet to notice the result of bit error to sender
+* error) [the sender retransmits if no ACK received](#packet-retransmission)
+
+### packet loss
+
+: can be resolved by *timeout + sequence number*<br/>
+=> *ordered delivery* / *data duplication prevention* when ACK loss
+
+1. sender adds the sequence number to the packet: pkt0
+2. the sender waits "reasonable" amount of time for ACK: ack0
+3. * if packet loss / ACK loss ) retransmits pkt0
+    - if premature timeout or delayed ACK ) deny the request
+
+U<sub>sender</sub> = (N * D<sub>trans</sub>) / (RTT + D<sub>trans</sub>) = **N** * 0.027%
+
+* 1RTT = 2*D<sub>prop</sub>
+* N(no. of packets sending at the same time) ⬆ U<sub>sender</sub> ⬆
+
+## packet retransmission 
+
+Automatic Repeat reQuest
+
+* stop-and-wait: 
+* pipelining method
+    - go-back-N
+    - selective repeat
+
+## requirements
+
+| Transport Service | kinds of app | for | 
+| ------ |------ |------ |
+| **data integrity** | file transfer, web transactions | no loss<Br/>(<-> loss tolerant) |
+| **timing** | Internet telephony, interactive games | time sensitive<Br/>(<-> delay) |
+| **throughput** | multimedia | minimum throughput<br/>(<-> elastic) | 
+
+# 3.5 TCP
+
+connection-oriented transport
+
+* TCP service: connection-oriented by handshaking
+    - error control: ~until no data error
+    - flow control: sender considers receiver's data capability
+    - congestion control: no data overload in router/switch
+
+## segment structure
+
+## reliable data transfer
+
+## flow control
+
+## connection management
+
+# 3.6 principles of congestion control
+
+# 3.7 TCP congestion control
