@@ -666,7 +666,7 @@ logical communication between...
 
 ## mux VS demux
 
-|Multiplexing|Demultiplexing|
+|mux|demux|
 |---|---|
 |at sender|at receiver|
 |from source|to destination|
@@ -678,9 +678,9 @@ logical communication between...
 ||connetionless demux|connection-oriented demux|
 |---|---|---|
 |ex|UDP|TCP|
-|to direct segment to appropriate socket|destination IP address<br/>destination port #|source, dest IP address<br/>source, dest port number|
-|application<->transport|no handshaking<br/>- 1 app > 1 process > 1 socket|handshaking : making its own socket for 1 specific client<br/>- 1 app > 多 processes(by fork: p4->p5, p6) > 多 sockets<br/>- 1 app > 1 process > 多 threads > 多 sockets|
-|transport<->network|1 IP datagram (> IP address) > 1 transport-layer segment (>  port number)||
+|to direct segment to appropriate socket|dest IP address<br/>dest port #|source, dest IP address<br/>source, dest port #|
+|app. layer<->trans. layer<br/>: making its own socket for 1 specific client|no handshaking<br/>- 1 app > 1 process > 1 socket|handshaking<br/>- 1 app > **多 processes**(by fork(): p4->p5, p6) > 多 sockets<br/>- 1 app > 1 process > **多 threads** > 多 sockets|
+|trans. layer<->net. layer|1 IP datagram (∋ IP address) > 1 transport-layer segment (∋ port number)||
 
 ## segment format
 
@@ -699,16 +699,16 @@ logical communication between...
 ## User Datagram Protocol
 
 * no handshaking = no need for the connection = connectionless
-* each UDP segment handled independently of others = delivered out-of-order = can be lost
-* unreliable, best speed
-* UDP use: streaming multimedia apps, DNS, high-reliability required apps(add reliability at application layer)
+* each UDP segment handled independently = delivered out-of-order = can be lost
+* unreliable but best speed
+* UDP used in: streaming multimedia apps/ DNS / high-reliability required apps: add reliability at app. layer
 
 ## advs of UDP
 
-1. no connection establishment => no delay -> save 1 RTT
-2. simple: no need to save connection state at sender, receiver => fast speed
-3. only mux and demux services => small header size -> 40% of TCP header
-4. no congestion control(resolve data overload in router/switch) => UDP can blast away as fast as desired
+1. no **connection establishment** => *no delay* -> save 1 RTT
+2. simple: no need to **save connection state** at sender, receiver => *fast speed*
+3. only mux and demux services => *small header size* ≈ 40% of **TCP header**
+4. no **congestion control**(resolve data overload in router/switch) => UDP can *blast away as fast as desired*
 
 ## UDP segment format
 
@@ -720,7 +720,7 @@ logical communication between...
 * transport payload:
     - application data
 
-length = 8 bytes + length of payload 
+length = length of transport header(=8 bytes) + length of payload 
 
 # 3.4 principles of reliable data transfer
 
@@ -780,36 +780,36 @@ Automatic Repeat reQuest: **an error-control method for data transmission** that
 
 fraction of time sender is busy sending 
 
-``` md
-U<sub>sender</sub>
-= N* (sender's job / total time)<Br/>
-= N * {D<sub>trans</sub>) / (**2*D<sub>prop</sub> + D<sub>trans</sub>**)}<br/>
-= N * {D<sub>trans</sub>) / (1 RTT + D<sub>trans</sub>)}<br/>
-= N * 0.027%
-```
+> U<sub>sender</sub><br/>
+> = N* (sender's job / total time)<Br />
+> = N * {D<sub>trans</sub>) / (2*D<sub>prop</sub> + D<sub>trans</sub>)}<br />
+> = N * {D<sub>trans</sub>) / (1 RTT + D<sub>trans</sub>)}<br />
+> = N * 0.027%
+
+### ARQ methods to send packets
 
 1. stop-and-wait: 1 data packet at a time 
 2. pipelining method: N data packets at a time => U<sub>sender</sub> ⬆
 
-### pipelined protocols
+#### pipelined protocols
 
 ||go-back-N|selective repeat|
 |---|---|---|
-|sender sends|all the packets in its window|
-|sender window|N, **already ack'ed** < sent, not yet ack'ed < usable, not yet sent < not usable|N, **already ack'ed** *<->* sent, not yet ack'ed <  not usable|
-|sender sets timer for|the first packet|each unpacked packets|
-|timeout(x)|retransmit N<Br/>: packet x and *all higher* seq # packets in window|retransmit 1<Br/>: for each unack'ed packets|
+|sender sends|all the packets in its window||
+|sender window|N<br/>*already ack'ed* **->** sent, not yet ack'ed -> usable, not yet sent -> not usable|N<br/>*already ack'ed* **<->** sent, not yet ack'ed -> not usable|
+|sender sets timer for|the **first** unack'ed packet|**each** unack'ed packets|
+|timeout(x)|retransmit **N**<Br/>: packet x and *all higher* seq # packets in window|retransmit **1**<Br/>: for each unack'ed packets|
 |---|---|---|
-|receiver sends|*only cumulative ACK*|*individual ACK*|
-|receiver window|1|N, **transmitted to app layers** < not yet received(loss) <-> *buffered, but already ack'ed* < acceptable|
-|Supported order at Receiving end|in-order delivery only<br/>:discard all the higher packets and go back to the last cumulative ACK and send it again|out of deliver as well<br/>:send ACK of it but also buffer packets for all the higher packets to deliver together to app layer|
+|receiver sends|**only cumulative ACK**|**all individual ACK**|
+|receiver window|1|N<br/>already ack'ed(=transmitted to app. layer) -> not yet received(loss) <-> **buffered**, but already ack'ed -> acceptable|
+|Supported order at Receiving end|in-order delivery only<br/>: **discard** all the higher packets and **go back** to the last cumulative ACK and send it again|out of deliver as well<br/>: send ACK of it but also **buffer** packets for all the higher packets to **deliver together to app layer**|
 
 #### window
 
-* windows are moved when **..**, move the window after #
+* windows are moved *when*, move the window after #
 * window size↑ throughput↑ num of packets to retransmit↑ 
 * window size ∝ network congestion, receiver buffer overflow
-* *sequence # >= 2 * window size* ∵ duplicate data accepted as new if all the packets in windows size are lost.
+* **sequence # size >= 2 * window size** ∵ when all the packets in the size of window are lost, duplicate data will be accepted as new. 
 
 # 3.5 TCP
 
@@ -832,25 +832,27 @@ U<sub>sender</sub>
 * transport payload:
     - application data
 
-### Sequence #
+### Sequence Number
 
 * unit: bytes
 * from sender to receiver
-* the first byte in segment's data = n
+* seq # = the current seq# = n
 
-### Acknowledgements #
+### Acknowledgements Number
 
 * unit: bytes
 * from receiver to sender
-1. flag Ack bit == 0: ignore ACK
-2. flag Ack bit == 1: ack # = seq # of the next byte expected from the other side = n + MSS
+* ack # = the next seq # expected from the other side = n + MSS
 
-### rwnd
+1. flag Ack bit == 0: ignore ACK #
+2. flag Ack bit == 1: notice ACK #
+
+### Receiver WiNDow
 
 * unit: bytes
-* rwnd guarantees receiver buffer won't overflow 
-    - => sender manages the amount of original sending window to receiver's rwnd value
-* rcv buffer = buffered data + free buffer space(rwnd)
+* rwnd guarantees that receiver buffer won't overflow 
+    - => sender manages the amount of original *sending window to receiver's rwnd value*
+* rcv buffer = buffered data + *free buffer space(=rwnd)*
 
 #### flow control
 
@@ -864,8 +866,8 @@ receiver controls sender not to overflow receiver's buffer
 * PuSH data now: generally not used
 * ReSeT, SYNchronization: to establish connection
     - RST: to rest the connection
-    - SYN: to hand-shake, it means the first packet from sender
-* FINale: to close a connection, it means the last packet from sender
+    - SYN: to handshake, means the first packet from sender
+* FINale: to close a connection, means the last packet from sender
 
 #### 3-way handshake
 
@@ -881,16 +883,16 @@ The handshake confirms the identities of the connecting systems and allows addit
 * MSS = 512
 
 ``` md
-A -> B : seq# 451, ack# 103, data 512 bytes, SYN=1, ACK=0 : handshaking 1
-B -> A : seq# 103, ack# 963, data 512 bytes, SYN=1, ACK=1 : handshaking 2
+A -> B : seq# 451, ack# 103, data 512 bytes, *SYN=1*, *ACK=0* : handshaking 1
+B -> A : seq# 103, ack# 963, data 512 bytes, *SYN=1*, ACK=1 : handshaking 2
 A -> B : seq# 963, ack# 615, data 512 bytes, SYN=0, ACK=1 : handshaking 3, **EST** finished, no more handshaking
 B -> A : seq# 615, ack# 1475, data 154 bytes
-A -> B : seq# 1475, ack# 1629, data 1 byte, FIN=1, ACK=1
+A -> B : seq# 1475, ack# 1629, data 1 byte, *FIN=1*, ACK=1
 **FIN_WAIT_1**
-B -> A : seq# 1629, ack# 1476, data 1 byte, FIN=1, ACK=1
+B -> A : seq# 1629, ack# 1476, data 1 byte, *FIN=1*, ACK=1
 **FIN_WAIT_2**
 after got both FIN bit from hosts, **TIME_WAIT** to get the last ACK bit
-A -> B : no seq#, ack# 1478, no data, ACK=1 : 
+A -> B : no seq#, ack# 1478, *no data*, ACK=1 : 
 **closed** connection
 ```
 
@@ -936,10 +938,10 @@ A. Seq=43, ACK=80 (host ACKs receipt of echoed 'C')
 
 ### timeout
 
-TimeoutInterval = EstimatedRTT + safety margin
+**TimeoutInterval = EstimatedRTT + safety margin**
 
 * SampleRTT = the latest RTT value
-* EstimatedRTT = avg of cumulative RTT values = (1-α) * EstimatedRTT + α * SampleRTT = 0.9 * EstimatedRTT + 0.1 * SampleRTT
+* EstimatedRTT = avg of cumulative RTT values = 0.9 * EstimatedRTT + 0.1 * SampleRTT
 
 <!-- # 3.6 principles of congestion control
 
