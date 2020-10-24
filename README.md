@@ -102,30 +102,27 @@
 
 ex. mobile network, home networks, institutional networks
 
-## component
+## components of the Internet
 
 ### H/W
 
-* **end hosts**: running network apps on terminals
-* **interconnection devices**: router, switch, repeater...
-    - **packet switches**: the way to communicate between hosts in the other networks
+* end hosts: running network apps on terminals
+* interconnection devices: router, switch, ...
 * links: copper, fiber, radio, wireless...
-    - transmission rate: **bandwidth** ⬆ internet speed ⬆
 
 ### S/W
 
 * Operating Software
 * application programs
 * protocols: rules for communications
-    - ex. message format, order, action
 
 <hr/>
 
 # Overview
 
-network edge(end host->AP->edge router) ---(link)---> network core(router->ISP) => network edge
+**network edge**(end host->edge router)---(link)---network core(router->ISP)----**network edge**
 
-* [network edge](#12-network-edge) ⊃ end hosts ⊃ clients and servers
+* [network edge](#12-network-edge) ⊃ end hosts = end systems ⊃ clients and servers
 * [network core](#13-network-core): connects edges ⊃ interconnected devices: routers, switches
 * [physical media](#122-physical-media): wired, wireless communication links
 
@@ -133,15 +130,9 @@ network edge(end host->AP->edge router) ---(link)---> network core(router->ISP) 
 
 ## 1.2.1 Access Networks
 
-### when
-
-1. when end hosts want to access to the internet -> firstly access to "access network"
-2. then "access networks" also connects with edge router so that make end hosts be connected
-* ex. mobile access network, residential access network, institutional  access network
-
-### features
-
-* transmission rate: bandwidth(bps) ⬆ internet speed ⬆
+* end host -> Access Network -> edge router => ISP(Internet Service Provider)
+* connects subscribers to a particular service provider and, through the carrier network, to other networks such as the Internet.
+* transmission rate: bandwidth ⬆ internet speed ⬆
 * (central office) shared / dedicated
 
 ### ex1. Digital Subscriber Line
@@ -149,9 +140,9 @@ network edge(end host->AP->edge router) ---(link)---> network core(router->ISP) 
 **dedicated** access network 
 
 0. DSL modem -> splitter
-1. **DSL ph1 line**
+1. **DSL phone line**: only one user monopolies this connection
 2. (central office) DSL Access Multiplexer
-3. voice(~4kHz): teleph1 network | data(4kHz~): Internet Service Provider
+3. voice(~4kHz): telephone network VS data(4kHz~): ISP
 
 ### ex2. Cable Network
 
@@ -159,78 +150,88 @@ network edge(end host->AP->edge router) ---(link)---> network core(router->ISP) 
 
 0. cable modem -> splitter
 1. **coaxial cable**: cable company provide 1 signal to 多 users
-2. (central office) Cable Modem Termination System
+2. (central office) CMTS = Cable Modem Termination System = cable company
 3. Hybrid Fiber Coax
-4. Internet Service Provider
+4. ISP
 
 ### ex3. Home Network
 
-0. cable or DSL modem, ONT -> splitter
-1. Fiber To The Home
-2. (central office) Headend
-4. Internet Service Provider
+0. (wireless devices -> WAP), wired Ethernet, wired devices
+1. router
+0. cable or DSL modem, Optical Network Terminal -> splitter
+1. **FTTH**(Fiber To The Home)
+2. central office or Headend
+4. ISP
 
 ### ex4. Enterprise / Institutional Network
 
-0. AP, Ethernet switch
-4. Institutional link to ISP
+0. AP
+1. Ethernet switch
+2. Institutional router
+4. **Institutional link**
+5. ISP
 
 ### ex5. Wireless Access Networks
 
-| my network | network core | my network |
+| my network edge | network core | opponent's network edge |
 | ------------- | ------------- |------------- |
-| [end host(wireless) --(wireless)--- AP --(wire)-- edge router]| (routers) | [edge router -----end host]
+| [end host(wireless)---(wireless)---WAP---(wire)---edge router]| (routers) | [edge router -----end host]
 
 * wireless LANs: Wireless Fidelity(shared network)
 * wide-area wireless access(shared network)
+* Wireless Access Point: a device that creates a wireless local area network. An access point connects to a wired router, switch, or hub via an Ethernet cable, and projects a Wi-Fi signal to a designated area. 
 
 ## 1.2.2 Physical Media
 
 : the physical materials that are used to store or transmit information in data communications
 
-* guided: wired
+* guided media: signals propagate in solid(wired) media
     - Twisted-pair cable: copper wires, behind the ethernet
     - Coaxial cable: copper conductor, broadband
     - Fiber-optic Cable: high speed, low error rate
-* unguided: wireless
+* unguided media: signals propagate freely(wireless)
     - radio link types
 
 # 1.3 Network Core
 
 * connecting network edges
 * the mesh of interconnected routers
-* when sending packets, forwarding from a router to the next router
+* 2 functions of core-network
     - routing: Get a path from source host -> destination host by using routing algorithms
     - forwarding: Move packets from the before router -> the next router by using forwarding table
 
 ## 1.3.1 Two fundamental approaches to moving data
 
-### comparison
+### circuit switching VS packet switching 
 
 | circuit switching | packet switching |
 | ---------------- | ---------------- |
-| call setup, resource reservation<br/> : the resources needed along a path | no call setup, no resource reservation |
-| 多 users sharing a link<br/> by Frequency Division Multiplexing , Time Division Multiplexing | full link capacity<br/> by dividing into small packets which have their own each destination address<br/> using store-and-forward transmission |
-| low speed | 3.5x users but after it.. low Quality of Service |
-| in telephone networks | |
+| physical path | no physical path |
+| call setup, resource reservation<br/>(in adv, the entire bandwidth is reserved) | no call setup, no resource reservation |
+| how to allocate channel? FrequencyDM, TimeDM | how transmit? store-and-forward transmission |
+| all packets use same path | packets travel independently |
+| 多 users sharing a link | full link capacity |
+| low speed | 3.5x speed but after 35 users.. low QoS(Quality of Service) |
+| traditional telephone networks | handling data |
 
-### store-and-forward transmission
+<br/> by Frequency Division Multiplexing , Time Division Multiplexing
+
+#### store-and-forward transmission
 
 app in source Host ----link(by packets)----> app in destination Host
 
-* how? storing bits until a packet and then forwarding it
+* how? storing bits until becoming a packet and then forwarding it
 * => [total time](#delay)
 
 ## 1.3.2 A Network of Networks
 
-Internet = A Network (by ISP) of Networks (end system) 
-
 ### hierarchy structure
 
-host < access ISP < regional ISP (peering link) < Internet eXchange Point < Tier 1 ISP or Content Provider<Br/>
+host < access ISP < regional ISP < IXP < Tier 1 ISP or Content Provider<Br/>
 <img src="https://cs.pomona.edu/classes/po181u/slides/lec2/images/netofnets2.png" height="200">
 
-* content provider has its own **content provider network** in its own data center
+* A content provider(ex. Google) has its own **content provider network** in its own data center
+* Internet eXchange Points help create shorter, more direct routes for ISPs and CDNs.
 
 # 1.4 Evaluation Metrics in networks
 
@@ -260,7 +261,7 @@ To deliver a packet<Br/>
 
 => End-To-End ≈ (M + N) * L/R
 
-<img src="https://media.geeksforgeeks.org/wp-content/uploads/queing-delay.jpg" height="300"/>
+<img src="./packet-delay. JPG" height="150"/>
 
 ## 1.4.2 loss
 
