@@ -476,46 +476,61 @@ client can keep user session state in cookie file ex. my id in ebay, amazon
 2. [Install Local Web Cache](#2.-origin-server-+-local-web-cache): cheaper and faster(1.2s) but need version checking
 3. [Conditional GET method](#3.-Conditional-GET)
 
-### 1. origin server (+ fatter access link)
+### 1. origin server + fatter access link
 
 ***need to be fixed***
 
-#### assumptions
-
-* data rate from origin servers to browsers = object size * request rate = 0.1 Mbits * 15/s = 1.50Mbps
-* ***access link rate***: 1.45Mbps
-
-#### consequences
-
-Utilization
-
-* U<sub>LAN</sub> = data rate / LAN availability = 1.5Mbps / 1Gbps = 15%
-* ***U<sub>access link</sub>*** = access link rate / date rate = 1.5Mbps / 1.54Mbps = 99%
-
 #### total delay
 
+assumptions
+
+* data rate from origin servers to browsers = object size * request rate = 0.1 Mbits * 15/s = 1.5Mbps
+* ***access link rate***: 1.54Mbps ***=> 154Mps***
+
+consequences
+
+* U<sub>LAN</sub> = data rate / LAN availability = 1.5Mbps / 1Gbps = 15%
+* ***U<sub>access link</sub>*** = access link rate / date rate = 1.5Mbps / 1.54Mbps = 99% ***=> 0.99%***
+
+delays
+
 * Internet delay = RTT from institutional router to origin servers ≈ 2s
-* ***[Access delay](#141-delay)*** = queueing delay = access link rate / date rate = 1.5Mbps / 1.54Mbps ≈ 1 → ∞ ~ ***minutes***
+* ***Access delay*** = [queueing delay](#141-delay) = access link rate / date rate = 1.5Mbps / 1.54Mbps ≈ 1 → ∞ ~ minutes ***=> msecs***
 * LAN delay = μs
 
-=> total delay: 2s + ms + μs ≈ >m
+=> total delay: 2s + ***m*** + μs ≈ >m ***(+ increase access link rate)*** => total delay: 2s + ***msecs*** + μs ≈ >2s
 
-(+ increase access link bandwidth)
-
-=> total delay: 2s + ms + μs ≈ >2s
-
+<img src="https://github.com/100sun/network/blob/master/no-caching.JPG" height="450"/>
 <img src="https://github.com/100sun/network/blob/master/web-caching.JPG" height="450"/>
 
 ### 2. origin server + local web cache
 
-#### assumptions
+#### web caches 
 
-cache hit rate: 0.4
+web caches = proxy server
 
-#### consequences
+* what is proxy server?
+  + client for origin server
+  + server for client
+* ex? - HTTP request/response
+  + originally) client <-> proxy server <-> origin server
+  + if same request) client <-> proxy server
+* why web caching? 
+  + to reduce overhead of origin server
+  + to reduce response time for client
+  + to support more users for the origin server
+  + to reduce traffic of external server on an institution's access link for local ISP
+
+#### total delay
+
+assumptions 
+
+* cache hit rate: 0.4
+
+consequences
 
 * 40% requests satisfied at proxy servers
-  + LAN delay = 0.4 * μs 
+  + LAN delay = μs * 0.4
 * 60% requests satisfied at origin servers
   + data rate = 1.5Mbps * 0.6 = 0.9Mbps
   + U<sub>access link</sub> = 99% * 0.6 = 58%
@@ -524,22 +539,6 @@ cache hit rate: 0.4
   + LAN delay = μs
 
 => total delay = 2s * 0.6 + μs * 0.4 ≈ >1.2s
-
-#### proxy server
-
-web caches = proxy server
-
-* what is proxy server?
-  + client for origin server
-  + server for client
-* ex? - HTTP request/response
-  + client <-> proxy server <-> origin server
-  + if same request: client <-> proxy server
-* why web caching? 
-  + to reduce overhead of origin server
-  + to reduce response time for client
-  + to support more users for the origin server
-  + to reduce traffic of external server on an institution's access link for local ISP
 
 ### 3. Conditional GET
 
