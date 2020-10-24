@@ -500,25 +500,9 @@ delays
 
 => total delay: 2s + ***m*** + μs ≈ >m ***(+ increase access link rate)*** => total delay: 2s + ***msecs*** + μs ≈ >2s
 
-<img src="https://github.com/100sun/network/blob/master/no-caching.JPG" width="200"/> <img src="https://github.com/100sun/network/blob/master/web-caching.JPG" width="300"/>
+<img src="https://github.com/100sun/network/blob/master/no-caching.JPG" width="250"/> <img src="https://github.com/100sun/network/blob/master/web-caching.JPG" width="300"/>
 
 ### 2. origin server + local web cache
-
-#### web caches 
-
-web caches = proxy server
-
-* what is proxy server?
-  + client for origin server
-  + server for client
-* ex? - HTTP request/response
-  + originally) client <-> proxy server <-> origin server
-  + if same request) client <-> proxy server
-* why web caching? 
-  + to reduce overhead of origin server
-  + to reduce response time for client
-  + to support more users for the origin server
-  + to reduce traffic of external server on an institution's access link for local ISP
 
 #### total delay
 
@@ -539,12 +523,26 @@ consequences
 
 => total delay = 2s * 0.6 + μs * 0.4 ≈ >1.2s
 
-### 3. Conditional GET
+#### web caches 
 
-* why? objects in web cache have to be up-to-date as same as the original server
-* how? 
-  + HTTP request: if-modified-since: $date
-  + HTTP response: HTTP/1.0 304 Not Modified || HTTP/1.0 200 OK $data
+web caches = proxy server
+
+* what is proxy server?
+  + client for origin server
+  + server for client
+* ex? - HTTP request/response
+  + originally) client <-> proxy server <-> origin server
+  + if same request) client <-> proxy server
+* why web caching? 
+  + to reduce overhead of origin server
+  + to reduce response time for client
+  + to support more users for the origin server
+  + to reduce traffic of external server on an institution's access link for local ISP
+* Conditional GET method
+  + why? objects in web cache have to be up-to-date as same as the original server
+  + how? 
+    - HTTP request: if-modified-since: $date
+    - HTTP response: HTTP/1.0 304 Not Modified || HTTP/1.0 200 OK $data
 
 # 2.3 Electronic mail
 
