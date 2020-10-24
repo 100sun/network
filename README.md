@@ -29,12 +29,10 @@
 
 ## contents
 
-* [network](#network)
-* [notes](#notes)
-  + [contents](#contents)
+### Chapter 1 Computer Networks and the Internet 1
+
 * [1.1 what is the Internet?](#11-what-is-the-Internet?)
   + [component](#component)
-* [Overview](#Overview)
 * [1.2 Network Edge](#12-Network-Edge)
   + [1.2.1 Access Networks](#121-Access-Networks)
   + [1.2.2 Physical Media](#122-Physical-Media)
@@ -47,6 +45,9 @@
   + [1.4.3 throughput](#143-throughput)
 * [1.5 protocol layers, service models](#15-protocol-layers-service-models)
   + [Internet protocol stack](#Internet-protocol-stack)
+
+### Chapter 2 Application Layer
+
 * [2.1 principles of network applications](#21-principles-of-network-applications)
   + [App Structure](#App-Structure)
   + [Socket](#Socket)
@@ -68,6 +69,9 @@
   + [File distribution](#File-distribution)
 * [2.6 video streaming and content distribution networks](#26-video-streaming-and-content-distribution-networks)
   + [CDN](#CDN)
+
+### Chapter 3 Transport Layer 
+
 * [3.1 transport-layer services](#31-transport-layer-services)
 * [3.2 Multiplexing and Demultiplexing](#32-Multiplexing-and-Demultiplexing)
   + [mux and demux](#mux-and-demux)
