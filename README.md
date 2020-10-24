@@ -29,7 +29,7 @@
 
 ## contents
 
-### Chapter 1 Computer Networks and the Internet 1
+### Chapter 1 Computer Networks and the Internet
 
 * [1.1 what is the Internet?](#11-what-is-the-Internet?)
   + [component](#component)
