@@ -504,7 +504,7 @@ Utilization
 
 => total delay: 2s + ms + μs ≈ >2s
 
-<img src="https://github.com/100sun/network/blob/master/web-caching.JPG" height="500"/>
+<img src="https://github.com/100sun/network/blob/master/web-caching.JPG" height="450"/>
 
 ### 2. origin server + local web cache
 
