@@ -289,7 +289,7 @@ To deliver a packet<Br/>
 ## 5 layers
 
 | | explanation | protocol | Protocol Data Unit for encapsulation | controlled by | how to communicate | 
-| ------- | ------- | -----|-----|-----|
+| ------- | ------- | -----|-----|-----|----|
 | [application](#21-principles-of-network-applications) | support network application | [HTTP](#22-Web-and-HTTP), [SMTP](#23-electronic-mail), [DNS](#24-DNS), FTP | message | app developer| use [socket](#Socket) API to communicate |
 | [**transport**](#31-transport-layer-services) | data transfer between processes | TCP, UDP | + segment | OS | logical communication between processes |
 | **network** | find path | IP, routing protocols | + datagram |OS|logical communication between hosts|
@@ -301,7 +301,7 @@ To deliver a packet<Br/>
 * how encapsulation? always start from physical layer and go up by figuring out the needed info by the headers
   + source -> **switch**(between hops) -> **router**(between hosts) -> destination
 
-<img src="./encapsulation.jpg" height="250"/>
+<img src="https://github.com/100sun/network/blob/master/encapsulation.JPG" height="250"/>
 
 # 2.1 principles of network applications
 
@@ -330,11 +330,6 @@ network apps(ex. gmail, youtube, zoom, game) work only on **end systems**
 |graph|steeply linear|steadily curved(assisting the server)|
 |time to distribute|D<sub>c-s</sub>≥max{NF/u<sub>s</sub>, F/d<sub>min</sub>}|D<sub>p-p</sub>≥max{NF/(F/u<sub>s</sub>, u<sub>s</sub>+ ∑u<sub>i</sub>, F/d<sub>min</sub>}|
 
-## Socket
-
-* A network socket is a set of APIs for *sending and receiving data across the network*.
-* like a door: application -> (socket) -> transport -> ...
-
 ## Addressing Processes
 
 for http message to web server
@@ -349,7 +344,7 @@ for http message to web server
 |remote terminal access|Telnet|TCP|
 |[web](#22-Web-and-HTTP)|HTTP|TCP|
 |file transfer|FTP|TCP|
-|Domain Name|[DNS](#24-DNS)|UDP|
+|[Domain Name System](#24-DNS)|DNS|UDP|
 
 ### application layer protocol 
 
@@ -397,44 +392,16 @@ for http message to web server
 
 # 2.2 Web and HTTP
 
-<details>
-<summary>words</summary>
-
-#### word
-
 * HyperText Transfer Protocol 
 * RoundTripTime
 * Uniform Resource Locator
 * Carriage Return, Line Feed
 
-</details>
+* www: Webpage > base html file(=frame) > objects > url(=loc of obj file)
+* HTTP layers: HTTP > TCP > IP > ethernet, WiFi
 
-## HTTP response time
-
-* www: Webpage > base html file(frame) > objects > url(obj file loc)
-* HTTP layers: application: HTTP > transport: TCP > network: IP > link: ethernet, wifi
-
-### non-persistent HTTP 
-
-1. first object
-    1. 1RTT for tcp connection request/response: new *TCP connection [socket](#Socket)* created to initiate tcp connection
-    2. 1RTT for http request(URL)/response(base HTML file: file transmission time): that socket deleted to *terminate* tcp connection
-2. second object: 2RTT + file transmission time
-
--> **4RTT**+α => long latency<Br/>
--> then... how about **parallel TCP connection**: 4 sockets(< OS) => overhead
-
-### persistent HTTP 
-
-: no tcp connection more after initiated it
-
-1. first object
-    1. 1RTT for tcp: two tcp connection sockets created
-    2. 1RTT for http: keep two sockets ()
-2. second object
-    - 1RTT for http: parallel objects request/response
-
--> **3RTT**+α
+<details>
+<summary>HTTP format</summary>
 
 ## HTTP format
 
@@ -463,13 +430,44 @@ for http message to web server
 
 * entire body
 
+</details>
+
+## Socket
+
+* A network socket is a set of APIs for *sending and receiving data across the network*.
+* like a door: application -> (socket) -> transport -> ...
+
+## HTTP response time
+
+### non-persistent HTTP 
+
+1. first object
+    1. 1RTT for tcp connection request/response: new TCP connection socket is *created* to initiate tcp connection
+    2. 1RTT for http request for URL/response with base HTML file(file transmission time): the socket deleted to *terminate* tcp connection
+2. second object: 2RTT + file transmission time
+* -> **4RTT**+α => long latency<Br/>
+
+parallel objects request/response <- parallel TCP connection <- 4 sockets(∈ OS) => overhead for OS
+
+### persistent HTTP 
+
+: no tcp connection more after initiated it
+
+1. first object
+    1. 1RTT for tcp: two tcp connection sockets created
+    2. 1RTT for http: keep two sockets
+2. second object: 1RTT for http 
+* -> **3RTT**+α
+
+parallel objects request/response <- 1 TCP connection <- 1 sockets(∈ OS) => no overhead for OS
+
 ## cookies
 
 client can keep user session state in cookie file ex. my id in ebay, amazon
 
 1. HTTP request
     - if first access: A server creates ID
-    - if not: send my id by each server with cookie headerline
+    - if not: send my id(∝ each server) w/ cookie headerline
 2. HTTP response msg
 
 ## how to reduce delay
@@ -541,7 +539,7 @@ web caches = proxy server
   + to support more users for the origin server
   + to reduce traffic of external server on an institution's access link for local ISP
 
-<img src="/web-caching. JPG" height="200"/>
+<img src="https://github.com/100sun/network/blob/master/web-caching.JPG" height="200"/>
 
 ### 3. Conditional GET
 
@@ -668,14 +666,18 @@ how does CDN DNS select "good" CDN node to stream to client? let client decide
 
 ### Netflix
 
-> 1. Netflix uploads studio master to Amazon cloud
-> 2. create 多 version of movie (different endodings) in cloud
-> 3. upload versions from cloud to CDNs(Akami, limelight, level-3 CDN)
+#### uploading
 
-> 1. when client requests(browses) video
-> 2. cloud returns the manifest file addressing three 3rd > > party CDNs host/stream Netflix content
-> 3. client requests HTTP to 1 of CDN
-> 4. CDN sends streaming 
+1. Netflix uploads studio master to Amazon cloud
+2. *create 多 versions* of movie (different endodings) in *cloud*
+3. *upload versions* from cloud to *CDNs*(Akami, limelight, level-3 CDN)
+
+#### streaming
+
+1. when client requests(browses) video
+2. *cloud* returns the manifest file *addressing* three 3rd party *CDNs* host/stream Netflix content
+3. client requests *HTTP* to 1 of *CDN*
+4. CDN sends *streaming*
 
 # 3.1 transport-layer services
 
