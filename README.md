@@ -301,7 +301,7 @@ To deliver a packet<Br/>
 * how encapsulation? always start from physical layer and go up by figuring out the needed info by the headers
   + source -> **switch**(between hops) -> **router**(between hosts) -> destination
 
-<img src="https://github.com/100sun/network/blob/master/encapsulation.JPG" height="250"/>
+<img src="https://github.com/100sun/network/blob/master/encapsulation.JPG" height="400"/>
 
 # 2.1 principles of network applications
 
@@ -504,6 +504,8 @@ Utilization
 
 => total delay: 2s + ms + μs ≈ >2s
 
+<img src="https://github.com/100sun/network/blob/master/web-caching.JPG" height="500"/>
+
 ### 2. origin server + local web cache
 
 #### assumptions
@@ -538,8 +540,6 @@ web caches = proxy server
   + to reduce response time for client
   + to support more users for the origin server
   + to reduce traffic of external server on an institution's access link for local ISP
-
-<img src="https://github.com/100sun/network/blob/master/web-caching.JPG" height="200"/>
 
 ### 3. Conditional GET
 
