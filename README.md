@@ -27,7 +27,7 @@
 
 # contents
 
-#### Chapter 1 Computer Networks and the Internet
+### Chapter 1 Computer Networks and the Internet
 
 * [1.1 what is the Internet?](#11-what-is-the-Internet?)
     - [inter + network](#inter-+-network)
@@ -55,7 +55,7 @@
 * [1.5 protocol layers, service models](#15-protocol-layers-service-models)
   + [5 layers](#5-layers)
 
-#### Chapter 2 Application Layer
+### Chapter 2 Application Layer
 
 * [2.1 principles of network applications](#21-principles-of-network-applications)
   + [Two kinds of app. structure](#Two-kinds-of-app-structure)
@@ -96,7 +96,7 @@
   + [Content Distribution Networks](#Content-Distribution-Networks)
     - [Netflix](#Netflix)
 
-#### Chapter 3 Transport Layer
+### Chapter 3 Transport Layer
 
 * [3.1 transport-layer services](#31-transport-layer-services)
     - [transport-layer VS network-layer](#transport-layer-VS-network-layer)
