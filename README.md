@@ -302,9 +302,9 @@ for http message to web server
 | [UDP](#33-UDP) | unreliable ∵ unordered delivery| fast speed | streaming multimedia, internet telephony(one-time transaction) |
 
 * TCP: connection-oriented service by handshaking
-    - error control: ~until no data error
-    - flow control: sender considers receiver's data capability
-    - congestion control: no data overload in router/switch
+    - [error control](#-reliable-data-transfer): ~until no data error
+    - [flow control](#flow-control): sender considers receiver's data capability
+    - [congestion control](#-37-TCP-congestion-control): no data overload in router/switch
 
 # 2.2 Web and HTTP
 
@@ -674,18 +674,29 @@ logical communication between...
 32 bits
 
 * (8bytes)transport header:
-    - (16bit)source port # / (16bit)dest port #
-    - (16bit)length / (16bit)checksum
+    - (16bits)source port # / (16bits)dest port #
+    - (16bits)**length** / (16bits)checksum
 * transport payload:
     - application data
 
-### length
+length = 8 bytes + length of payload 
 
-= 8 bytes + length of payload 
+# 3.4 principles of reliable data transfer
 
-### checksum
+## reliable data transfer means..
 
-: detect bit error in transmitted  => drop || alert to app
+there could be error under the network layer but *transport layer* makes *app layer* to feel that there is *no error*
+
+## error type
+
+sender <-> receiver
+
+### 1. bit error
+
+: can be resolved by ***checksum***
+
+* no error) receiver sends *ACK*nowledgement to the received packet to notice the result of bit error to sender
+* error) discard the packet and timeout() so that the sender *retransmits*
 
 #### how to make checksum
 
@@ -709,72 +720,185 @@ receiver
 
 but if it gets errors from both 1 and 0 -> there is no way to check error
 
-# 3.4 principles of reliable data transfer
+### 2. packet loss
 
-## reliable data transfer means..
+: can be resolved by ***timeout + sequence number*** => [ARQ](#ARQ)
 
-there could be error under the network layer but *transport layer* makes *app layer* to feel that there is *no error*
+## ARQ
 
-## error type
+Automatic Repeat reQuest: **an error-control method for data transmission** that uses ***acknowledgements*** (messages sent by the receiver *indicating* that it has *correctly received a packet*) and ***timeouts*** (specified periods of time *allowed to elapse* before an acknowledgment is to be received) to achieve **reliable data transmission** over an unreliable communication channel. 
 
-sender <-> receiver
+1. sender adds the *sequence number* to the packet: pkt0
+2. the *sender waits* "reasonable" amount of *time for ACK(timeout)*: ack0
+3. * packet loss / ACK loss => *retransmits* pkt0
+    - premature timeout or delayed ACK => *deny* the request
 
-### bit error
+=> +) *ordered delivery* / *data duplication prevention* when ACK loss
 
-: can be resolved by *checksum*
+### Utilization of Sender
 
-* no error) receiver sends *ACK*nowledgement to the received packet to notice the result of bit error to sender
-* error) [the sender retransmits if no ACK received](#packet-retransmission)
+fraction of time sender is busy sending 
 
-### packet loss
+``` md
+U<sub>sender</sub>
+= N* (sender's job / total time)<Br/>
+= N * {D<sub>trans</sub>) / (**2*D<sub>prop</sub> + D<sub>trans</sub>**)}<br/>
+= N * {D<sub>trans</sub>) / (1 RTT + D<sub>trans</sub>)}<br/>
+= N * 0.027%
+```
 
-: can be resolved by *timeout + sequence number*<br/>
-=> *ordered delivery* / *data duplication prevention* when ACK loss
+1. stop-and-wait: 1 data packet at a time 
+2. pipelining method: N data packets at a time => U<sub>sender</sub> ⬆
 
-1. sender adds the sequence number to the packet: pkt0
-2. the sender waits "reasonable" amount of time for ACK: ack0
-3. * if packet loss / ACK loss ) retransmits pkt0
-    - if premature timeout or delayed ACK ) deny the request
+### pipelined protocols
 
-U<sub>sender</sub> = (N * D<sub>trans</sub>) / (RTT + D<sub>trans</sub>) = **N** * 0.027%
+||go-back-N|selective repeat|
+|---|---|---|
+|sender sends|all the packets in its window|
+|sender window|N, **already ack'ed** < sent, not yet ack'ed < usable, not yet sent < not usable|N, **already ack'ed** *<->* sent, not yet ack'ed <  not usable|
+|sender sets timer for|the first packet|each unpacked packets|
+|timeout(x)|retransmit N<Br/>: packet x and *all higher* seq # packets in window|retransmit 1<Br/>: for each unack'ed packets|
+|---|---|---|
+|receiver sends|*only cumulative ACK*|*individual ACK*|
+|receiver window|1|N, **transmitted to app layers** < not yet received(loss) <-> *buffered, but already ack'ed* < acceptable|
+|Supported order at Receiving end|in-order delivery only<br/>:discard all the higher packets and go back to the last cumulative ACK and send it again|out of deliver as well<br/>:send ACK of it but also buffer packets for all the higher packets to deliver together to app layer|
 
-* 1RTT = 2*D<sub>prop</sub>
-* N(no. of packets sending at the same time) ⬆ U<sub>sender</sub> ⬆
+#### window
 
-## packet retransmission 
-
-Automatic Repeat reQuest
-
-* stop-and-wait: 
-* pipelining method
-    - go-back-N
-    - selective repeat
-
-## requirements
-
-| Transport Service | kinds of app | for | 
-| ------ |------ |------ |
-| **data integrity** | file transfer, web transactions | no loss<Br/>(<-> loss tolerant) |
-| **timing** | Internet telephony, interactive games | time sensitive<Br/>(<-> delay) |
-| **throughput** | multimedia | minimum throughput<br/>(<-> elastic) | 
+* windows are moved when **..**, move the window after #
+* window size↑ throughput↑ num of packets to retransmit↑ 
+* window size ∝ network congestion, receiver buffer overflow
+* *sequence # >= 2 * window size* ∵ duplicate data accepted as new if all the packets in windows size are lost.
 
 # 3.5 TCP
 
-connection-oriented transport
+## Transmission Control Protocol
 
-* TCP service: connection-oriented by handshaking
-    - error control: ~until no data error
-    - flow control: sender considers receiver's data capability
-    - congestion control: no data overload in router/switch
+* point-to-point: one sender, one receiver( <=> multicasting protocol)
+* connection-oriented service = need handshaking
+* Pipelined transmission(-> throughput↑ ): MSS(maximum segment size)
+* Full-duplex connection: bi-directional data flow <=> both a and b can be either sender or receiver
 
-## segment structure
+## TCP segment format
 
-## reliable data transfer
+* (dynamic)transport header:
+    - (16bit)source port # / (16bit)dest port #
+    - (32bits)Seq. #
+    - (32bits)ACK. #
+    - (32bits)**header len** + flags(U A P R S F) + rwnd
+    - (32bits)checksum + urg data pointer
+    - options...
+* transport payload:
+    - application data
 
-## flow control
+### Sequence #
 
-## connection management
+* unit: bytes
+* from sender to receiver
+* the first byte in segment's data = n
+
+### Acknowledgements #
+
+* unit: bytes
+* from receiver to sender
+1. flag Ack bit == 0: ignore ACK
+2. flag Ack bit == 1: ack # = seq # of the next byte expected from the other side = n + MSS
+
+### rwnd
+
+* unit: bytes
+* rwnd guarantees receiver buffer won't overflow 
+    - => sender manages the amount of original sending window to receiver's rwnd value
+* rcv buffer = buffered data + free buffer space(rwnd)
+
+#### flow control
+
+receiver controls sender not to overflow receiver's buffer 
+
+### flags
+
+* unit: bits
+* URGent data: generally not used
+* ACKnowledgement: to ignore ACK at first
+* PuSH data now: generally not used
+* ReSeT, SYNchronization: to establish connection
+    - RST: to rest the connection
+    - SYN: to hand-shake, it means the first packet from sender
+* FINale: to close a connection, it means the last packet from sender
+
+#### 3-way handshake
+
+The handshake confirms the identities of the connecting systems and allows additional communication to take place.
+
+### ex. general
+
+* seq # = the last received ACK #
+* ack # = the last received seq # + size of data(< MSS)
+
+* A's initial seq# is x(451)
+* B's initial seq# is y(103)
+* MSS = 512
+
+``` md
+A -> B : seq# 451, ack# 103, data 512 bytes, SYN=1, ACK=0 : handshaking 1
+B -> A : seq# 103, ack# 963, data 512 bytes, SYN=1, ACK=1 : handshaking 2
+A -> B : seq# 963, ack# 615, data 512 bytes, SYN=0, ACK=1 : handshaking 3, **EST** finished, no more handshaking
+B -> A : seq# 615, ack# 1475, data 154 bytes
+A -> B : seq# 1475, ack# 1629, data 1 byte, FIN=1, ACK=1
+**FIN_WAIT_1**
+B -> A : seq# 1629, ack# 1476, data 1 byte, FIN=1, ACK=1
+**FIN_WAIT_2**
+after got both FIN bit from hosts, **TIME_WAIT** to get the last ACK bit
+A -> B : no seq#, ack# 1478, no data, ACK=1 : 
+**closed** connection
+```
+
+* A transmits 1111 bytes to B
+* B transmits 666 bytes to A
+
+### ex. echo program
+
+* Error-free
+* Assume connection already established
+
+``` 
+B. Seq=78, ACK=42, data = 'B'
+A. Seq=42, ACK=79, data = 'C' (user sends 'C')
+B. Seq=79, ACK=43, data = 'C' (host ACKs receipt of 'C' / echoes back 'C')
+A. Seq=43, ACK=80 (host ACKs receipt of echoed 'C')
+```
+
+## [reliable data transfer](#34-principles-of-reliable-data-transfer)
+
+* cumulative ACKs (of go-back-N) + buffering packet (of selective repeat)
+* retransmissions triggered by timeout events + duplicate ACKs
+
+### sender
+
+1. data from app layer -> segments
+2. segment + seq. #
+3. (re)send segment and set timer
+    - even when timeout(n), if received the cumulative ACK which is higher than the lost ACK, then it doesn't retransmit
+    - when sender reciept of 3 duplicat ACK, then **fast retransmit** before timeout
+
+### receiver
+
+1. receive data from sender
+2. [bit error check](#-1-bit-error)
+3. send ACK
+    1. received in-order seq. #  -> cumulative ACK
+    2. received gapped seq. #  -> buffered all the higher pkts and go back to the last cumulative ACK and send it again 
+    3. received duplicated seq. # -> discard that packet but send its cumulative  ACK tho
+        * lost ACK, premature timeout
+
+### timeout
+
+TimeoutInterval = EstimatedRTT + safety margin
+
+* SampleRTT = the latest RTT value
+* EstimatedRTT = avg of cumulative RTT values = (1-α) * EstimatedRTT + α * SampleRTT = 0.9 * EstimatedRTT + 0.1 * SampleRTT
 
 # 3.6 principles of congestion control
 
 # 3.7 TCP congestion control
+cwnd
