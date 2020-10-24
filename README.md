@@ -261,7 +261,7 @@ To deliver a packet<Br/>
 
 => End-To-End ≈ (M + N) * L/R
 
-<img src="./packet-delay.jpg" height="150"/>
+<img src="https://github.com/100sun/network/blob/master/packet-delay.JPG" height="150"/>
 
 ## 1.4.2 loss
 
