@@ -500,8 +500,7 @@ delays
 
 => total delay: 2s + ***m*** + μs ≈ >m ***(+ increase access link rate)*** => total delay: 2s + ***msecs*** + μs ≈ >2s
 
-<img src="https://github.com/100sun/network/blob/master/no-caching.JPG" width="300"/> 
-<img src="https://github.com/100sun/network/blob/master/web-caching.JPG" width="300"/>
+<img src="https://github.com/100sun/network/blob/master/no-caching.JPG" width="200"/> <img src="https://github.com/100sun/network/blob/master/web-caching.JPG" width="300"/>
 
 ### 2. origin server + local web cache
 
