@@ -1,3 +1,0 @@
-send : letter give
-receive : letter get ( packet check or not )
-deliver : letter get ( packet checked )
