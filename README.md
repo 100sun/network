@@ -247,66 +247,88 @@ To deliver a packet<Br/>
 * L bits = size of packet
 * R bps = bandwidth of the link
 * D meters = distance = length of physical link
-* A packet/sec = average packet arrival rate 
+* a packet/sec = average packet arrival rate 
+* s = signal speed
+* I = traffic intensity = La/R
+
+<img src="https://github.com/100sun/network/blob/master/packet-delay.JPG" height="100"/>
 
 1. **processing** delay: before forwarding a packet, should check *bits error and destination address* in the packet header
     - d<sub>proc</sub> -> opt to the quality of router
 2. **queueing** delay: Time a job waits in a queue until it can be executed 
-    - d<sub>queue</sub> -> opt to the number of network users(= traffic intensity = ***La/R***)
-        - La/R ≈ 0 -> small / La/R ≈ 1 -> large / La/R > 1 ≈ *infinite* => so variable
+    - d<sub>queue</sub>= I(L/R)(1 - I) -> opt to the number of network users
+        - La/R ≈ 0 -> small
+        - La/R ≈ 1 -> large
+        - La/R > 1 ≈ *infinite*
+        - => so variable
 3. **transmission**: Time taken to put a packet onto link (link transmission rate = link capacity = link bandwidth)
-    - d<sub>trans</sub> = data size / bandwidth = ***L/R sec*** -> opt to bandwidth of output link
+    - d<sub>trans</sub> = ***L/R*** -> opt to bandwidth of output link
 4. **propagation**: Time taken to reach the destination from the start point for bits
-    - d<sub>prop</sub> = distance / transmission speed = ***D / s***(L/R) -> opt to the amount of data
-
-=> End-To-End ≈ (M + N) * L/R
-
-<img src="https://github.com/100sun/network/blob/master/packet-delay.JPG" height="150"/>
+    - d<sub>prop</sub> = D/s -> opt to the amount of data
+* => End-To-End ≈ (M + N) * L/R
 
 ## 1.4.2 loss
 
 : Packet Loss Rate (<-> Packet Delivery Rate)
 
 * usually in router
-* in a buffer when queueing delay, data > queue capacity => dropped
-* host: re-transmission, network: waste of resource, user: delay
+* when queueing delay, data > queue capacity in a buffer => dropped
+* => host: re-transmission / network: waste of resource / user: delay
 
 ## 1.4.3 throughput
 
-: sum of traffic <=> how much data has been moved between server and client <Br/>
-=> rate: bits/time unit
+: rate (bits/sec) at which bits transferred between sender/receiver 
 
 1. instantaneous: throughput at the peak
 2. average: throughput on the average 
-    - end-end average throughput == bottleneck link == min(**R<sub>s</sub>, R<sub>c</sub>**, R/10)
+
+* end-to-end average throughput == bottleneck link == min(**R<sub>s</sub>, R<sub>c</sub>**, R/10)
 
 # 1.5 protocol layers, service models
 
-## Internet protocol stack
+## 5 layers
 
-| 5 layers | explanation | protocol | encapsulation | controlled by | how to communicate | 
+| | explanation | protocol | Protocol Data Unit for encapsulation | controlled by | how to communicate | 
 | ------- | ------- | -----|-----|-----|
-| [application](#21-principles-of-network-applications) | support network application | [HTTP](#22-Web-and-HTTP), [SMTP](#23-electronic-mail), [DNS](#24-DNS), FTP | message | user(app developer)| uses [socket](#Socket) API to communicate |
-| [**transport**](#31-transport-layer-services) | data transfer process <-> process | TCP, UDP | + segment | OS | logical communication between processes |
+| [application](#21-principles-of-network-applications) | support network application | [HTTP](#22-Web-and-HTTP), [SMTP](#23-electronic-mail), [DNS](#24-DNS), FTP | message | app developer| use [socket](#Socket) API to communicate |
+| [**transport**](#31-transport-layer-services) | data transfer between processes | TCP, UDP | + segment | OS | logical communication between processes |
 | **network** | find path | IP, routing protocols | + datagram |OS|logical communication between hosts|
-| **link** | data transfer by hop from source to destination | Ethernet, WiFi | + frame |OS | 
-| **physical** | on the wire like cable, radio | bits | Protocol Data Unit |OS | 
+| **link** | data transfer between hop | Ethernet, WiFi | + frame |OS | 
+| **physical** | on the wire like cable, radio |  | bits |OS | 
+ 
 
-* layering: modularization -> maintenance, system update
-* encapsulation: message + headers..
-    - source -> **switch**(link+physical) -> **router**(network+link+physical) -> destination(only *message + segment* are from source)
-    -  always start from physical layer and go up by figuring out the needed info by the headers
+* why layering? modularization -> maintenance 👍, system update 👍
+* how encapsulation? always start from physical layer and go up by figuring out the needed info by the headers
+  + source -> **switch**(between hops) -> **router**(between hosts) -> destination
+
+<img src="./encapsulation.jpg" height="250"/>
 
 # 2.1 principles of network applications
 
 network apps(ex. gmail, youtube, zoom, game) work only on **end systems**
 
-## App Structure
+## Two kinds of app. structure
 
 | model | communication | data consumer | data provider | scaling | 
 | ---- |---- | ---- | ---- |---- | 
-| **client-server model** | process of client <-> process of server | client<br/>on/off<br/>dynamic IP address | server<br/>always on<br/>permanent IP address | data centers↑ | 
-| **Peer-2-Peer model** | arbitrary end system <-> arbitrary end system | all devices | all devices | peer↑(self-scalability) | 
+| **client-server model** | between processes of client and server | client<br/>: can be on/off<br/>: has a dynamic IP address | server<br/>: should be always on<br/>: has a permanent IP address | data centers↑ | 
+| [**PeerToPeer model**](#25-P2P-applications) | between arbitrary end systems | all devices | all devices | peer↑(self-scalability) | 
+
+### File distribution
+
+* file size F
+* N: num of client can be varied
+* u<sub>s</sub>: server upload capacity
+* u<sub>i</sub>: peer i upload capacity
+* d<sub>i</sub>: peer i download capacity
+
+||client-server|P2P|
+|--|--|--|--|
+||1 server -> N clients|1 serer -> 1 client, N peers -> N clients(redistribute)|
+|upload|**N**F/u<sub>s</sub>|F/u<sub>s</sub>, **N**F/(u<sub>s</sub>+ ∑**u<sub>i</sub>**)|
+|download|F/d<sub>min</sub>|F/d<sub>min</sub>|
+|graph|steeply linear|steadily curved(assisting the server)|
+|time to distribute|D<sub>c-s</sub>≥max{NF/u<sub>s</sub>, F/d<sub>min</sub>}|D<sub>p-p</sub>≥max{NF/(F/u<sub>s</sub>, u<sub>s</sub>+ ∑u<sub>i</sub>, F/d<sub>min</sub>}|
 
 ## Socket
 
@@ -317,25 +339,17 @@ network apps(ex. gmail, youtube, zoom, game) work only on **end systems**
 
 for http message to web server
 
-### host device -> (permanent 32bit **IP address + port number**(process identifier)) -> host device
-
-* well known port numbers: 80(HTTP), 25(mail)
+* host device -> (permanent 32bit IP address + port. #) -> host device
 
 ## Protocol
 
-* [email](#23-electronic-mail): SMTP > TCP
-* remote terminal access: Telnet > TCP
-* [web](#22-Web-and-HTTP): HTTP > TCP
-* file transfer: FTP > TCP
-* [DNS](#24-DNS) > UDP
-
-|HTTP|SMTP|
-|---|---|
-|port|80|25|
-|object<->data|pull|push|
-|in 1 response message|1 object|多 objects|
-|interaction| command(ASCII) + response(status code+phrase)||
-|in transport layer|use [TCP](#Internet-transport-protocols-services) connection ∵ reliability||
+|description|app. proto|trans. proto|
+|--|--|--|
+|[email](#23-electronic-mail)|SMTP|TCP|
+|remote terminal access|Telnet|TCP|
+|[web](#22-Web-and-HTTP)|HTTP|TCP|
+|file transfer|FTP|TCP|
+|Domain Name|[DNS](#24-DNS)|UDP|
 
 ### application layer protocol 
 
@@ -344,12 +358,22 @@ for http message to web server
 
 #### defines
 
-1. type: request/response message
-2. syntax: fields of message
-3. semantics: how to interpret fields
+1. type: *request/response* message
+2. syntax: fields of *message*
+3. semantics: how to *interpret* fields
 4. rules
 
-### underlying transport protocol
+#### HTTP VS SMTP
+
+||HTTP|SMTP|
+|---|---|---|
+|port|80|25|
+|object<->data|pull|push|
+|in 1 response message|1 object|多 objects|
+|interaction| command(ASCII) + response(status code+phrase)||
+|in transport layer|use [TCP](#Internet-transport-protocols-services) connection ∵ reliability||
+
+### the underlying transport protocol
 
 #### requirements
 
@@ -606,74 +630,52 @@ Domain Name System
 
 # 2.5 P2P applications
 
-## Pure P2P architecture
-
 * A peer can be both client and server 
 * no need for always-on server
 * changing IP addresses
 * good scalability
-* e.g. [BitTorrent](#BitTorrent), VoIP (Skype) 
+* e.g. BitTorrent, VoIP (Skype) 
 
-## File distribution
+## BitTorrent
 
-how much time to distribute file (size F) from 1 server to N peers?: max{}
-
-* u<sub>s</sub>: server upload capacity
-* u<sub>i</sub>: peer i upload capacity
-* d<sub>i</sub>: peer i download capacity
-
-### by [app structure](#App-Structure)
-
-||client-server|P2P|
-||1 server -> N clients|1 serer -> 1 client, N peers -> N clients(redistribute)|
-|upload|**N**F/u<sub>s</sub>|F/u<sub>s</sub>, **N**F/(u<sub>s</sub>+ SUM**u<sub>i</sub>**)|
-|download|F/d<sub>min</sub>|F/d<sub>min</sub>|
-|graph|steeply linear|steadily curved(assisting the server)|
-
-**varied** ∵ Num of client can be varied
-
-### BitTorrent
-
-#### requesting chunks:
+### requesting chunks
 
 1. file divided into 256Kb chunks
-2. asks chunks list to each peer
-3. rarest first
+2. asks chunks-list to each peer
+3. ask rarest chunks first
 
-#### sending chunks
+### sending chunks
 
 : tit-for-tat
 
-1. every 30 secs: A peer randomly selects B peer, starts sending chunks to B peer
-2. every 10 secs: B peer updates its top 4 providers, starts sending chunks to A peer
-3. A peer updates its top 4 providers
+1. every 30 secs: *A* peer *randomly* selects B peer, starts sending chunks to B peer
+2. every 10 secs: *B* peer *updates* its top 4 providers, starts sending chunks to A peer
+3. *A* peer *updates* its top 4 providers
 
 # 2.6 video streaming and content distribution networks
 
-how to stream content (selected from millions of videos) to hundreds of thousands of simultaneous users?
+how to stream content to thousands of simultaneous users?
 
 1. mega server: doesn't scale
-2. [store/serve 多 copies of videos at 多 geographically distributed sites](#CDN)
+2. store/serve 多 copies of videos at 多 geographically distributed sites => CDN
 
-## CDN
+## Content Distribution Networks
 
-Content Distribution Networks
-how does CDN DNS select "good" CDN node to stream to client
--> let client decide
+how does CDN DNS select "good" CDN node to stream to client? let client decide
 
 1. give client a list of several CDN servers
 2. client picks "best"
 
 ### Netflix
 
-1. Netflix uploads studio master to Amazon cloud
-2. create 多 version of movie (different endodings) in cloud
-3. upload versions from cloud to CDNs(Akami, limelight, level-3 CDN)
+> 1. Netflix uploads studio master to Amazon cloud
+> 2. create 多 version of movie (different endodings) in cloud
+> 3. upload versions from cloud to CDNs(Akami, limelight, level-3 CDN)
 
-1. when client requests(browses) video
-2. cloud returns the manifest file addressing three 3rd party CDNs host/stream Netflix content
-3. client requests HTTP to 1 of CDN
-4. CDN sends streaming 
+> 1. when client requests(browses) video
+> 2. cloud returns the manifest file addressing three 3rd > > party CDNs host/stream Netflix content
+> 3. client requests HTTP to 1 of CDN
+> 4. CDN sends streaming 
 
 # 3.1 transport-layer services
 
