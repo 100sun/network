@@ -1,29 +1,4 @@
-# network
-
 [Computer Networking: A Top-Down Approach (7th Edition)](https://www.amazon.com/Computer-Networking-Top-Down-Approach-7th/dp/0133594149?ref_=Oct_s9_apbd_otopr_hd_bw_byR&pf_rd_r=N3BJ8YAB316G1J3JRCNS&pf_rd_p=d52d9aef-6761-537a-b654-84d5a43406db&pf_rd_s=merchandised-search-10&pf_rd_t=BROWSE&pf_rd_i=3747)
-<details>
-  <summary>class info</summary>
-
-### scoring
-
-* exam 40, 40 
-* hw(problems, review) 10 
-* being late up to 4 is fine
-
-### syllabus
-
-* [Application layer protocol](#21-principles-of-network-applications)
-* Transport layer protocol
-
-<hr>
-
-* Network layer protocol
-* Link, physical layer protocol
-* Mobile network
-
-</details>
-
-<hr/>
 
 # contents
 
@@ -374,7 +349,7 @@ for http message to web server
 | **timing** | Internet telephony, interactive games | time sensitive<Br/>(<-> delay) |
 | **throughput** | multimedia | minimum throughput<br/>(<-> elastic) | 
 
-#### types
+#### TCP VS UDP
 
 | Transport layer protocols | reliability | speed | occasion |
 | ------ |------ |------ | ---- |
@@ -542,44 +517,40 @@ web caches = proxy server
 
 # 2.3 Electronic mail
 
-### Three major components
-
-* user agents: mail reader program e.g. outlook
+* User Agents: mail reader program e.g. outlook
 * mail servers: gmail, …
 * protocols: SMTP, POP3, IMAP, …
 
 => UA: write -> (SMTP) -> message queue of mail server -> (TCP < SMTP) -> mailbox of mail server -> (POP, IMAP, HTTP) -> UA: read
 
-## push
+## push: SMTP
 
-### SMTP
+Simple Mail Transfer Protocol: delivery to receiver’s server
 
-: delivery/storage to receiver’s server
+### transfer phases
 
-#### transfer phases
+1. handshaking
+  + S)220 C'url / C) HELO S'url
+2. message transfer
+3. closure
+  + C) QUIT / S) 221 C'url closing connection
 
-1. *handshaking*(TCP): HELO 
-2. *message transfer*
-3. *closure*: QUIT, closing connection
+## pull: POP3, IMAP, HTTP
 
-## pull
+mail access protocol
 
-Mail access protocol
-
-### POP3
-
-### IMAP
+### POP3 VS IMAP
 
 |POP3|IMAP|
 |---|---|
 |Post Office Protocol ver3|Internet Access Protocol|
-|*download & delete* mode(cannot re-read)<br/>*download & keep* mode(copies on different clients)<br/>=>terminate TCP connection|*keep *all messages in 1 server<br/>=>keep TCP connection|
+|1. *download & delete* mode(cannot re-read)<br/>2. *download & keep* mode(copies on different clients)<br/>=>terminate TCP connection|*keep* all messages in 1 server<br/>=>keep TCP connection|
 |*No* mail folder organization|Allows user to organize messages in *folders*|
 |*stateless* across sessions|*keep* user state across sessions|
 
 ### HTTP
 
-HyperText Transfer Protocol: used in the web-based emails e.g.gmail, hotmail
+: used in the web-based emails e.g. gmail, hotmail
 
 # 2.4 DNS
 
@@ -589,34 +560,39 @@ Domain Name System
 
 * mapping service: hostname -> (DNS) -> IP address (32 bit)
 * host aliasing: alias name(typed URL) -> (DNS) -> canonical name(real URL)
-* mail server aliasing
+* mail server aliasing 
 * load distribution: replicated Web servers(many IP addresses correspond to 1 hostname) ∵ scaling
 
-## how DNS works 
+## DNS servers
 
-* local DNS server) acts like proxy
-* DNS hierarchy) Root DNS server: total 13 > Top Level Domain server: com, org, kr(top-level country domains) > authoritative DNS server: amazon.com, google.com > IP address
+* local DNS server ≒ default name servers ≒ proxy servers ⊃ mapping service
+* DNS hierarchy
+  1. Root DNS server: total 13
+  2. TLD(Top Level Domain) server: com, org, top-level country domains(kr)
+  3. authoritative DNS server: amazon.com, google.com ⊃ mapping service
 
 ### by iterated query
 
 : between local DNS server and 1 of DNS hierarchy servers
 
-1. client -> local DNS server -> IP address => client: access to that IP address
-2. client -> *local DNS server <-> DNS hierarchy* => client: access to that IP address
+* client -> *local <=> root -> TLD -> authoritative* => client: access to that IP address
+
+-> heavy load on local DNS server
 
 ### by recursive query
 
 : between at upper level and lower level server
 
-1. client -> local DNS server -> IP address => client: access to that IP address
-2. client -> *local DNS server -> DNS hierarchy* => client: access to that IP address
+* client -> *local => root -> TLD -> authoritative* => client: access to that IP address
 
--> heavy load on root => **caching**
+-> heavy load on root DNS server => **caching**
 
-* local DNS server caches entries about TLD server
-* : client -> *local DNS server -> TLD server -> authoritative DNS server => client: access to that IP address
+### by caching
 
--> cached entries can be out-of-date => **T**ime**T**o**L**ive when mapping
+: Local DNS server caches entries about TLD server
+
+* client -> *local -> TLD -> authoritative* => client: access to that IP address
+  + Cached entries can be out-of-date => mapping entries ⊃ **T**ime**T**o**L**ive entries
 
 # 2.5 P2P applications
 
@@ -680,23 +656,27 @@ logical communication between...
 * processes: p1, p2 <-> p1, p2: transport layer
 * hosts: source <-> destination: network layer
 
+[here](#5-layers)
+
 ### TCP VS UDP 
 
-[here](#types)
+[here](#TCP-VS-UDP)
 
 # 3.2 Multiplexing and Demultiplexing
 
-## mux and demux
+## mux VS demux
 
 |Multiplexing|Demultiplexing|
-|sender|receiver|
-|source|destination|
-|add transport header|use header info|
-|send data from 多 sockets to 1 transport segment|deliver 1 received segment to 多 sockets|
+|---|---|
+|at sender|at receiver|
+|from source|to destination|
+|add transport header|use transport header|
+|*send* data from 多 sockets to 1 transport *segment*|*deliver* 1 received segment to 多 *sockets*|
 
 ### demux ex
 
 ||connetionless demux|connection-oriented demux|
+|---|---|---|
 |ex|UDP|TCP|
 |to direct segment to appropriate socket|destination IP address<br/>destination port #|source, dest IP address<br/>source, dest port number|
 |application<->transport|no handshaking<br/>- 1 app > 1 process > 1 socket|handshaking : making its own socket for 1 specific client<br/>- 1 app > 多 processes(by fork: p4->p5, p6) > 多 sockets<br/>- 1 app > 1 process > 多 threads > 多 sockets|
@@ -961,7 +941,8 @@ TimeoutInterval = EstimatedRTT + safety margin
 * SampleRTT = the latest RTT value
 * EstimatedRTT = avg of cumulative RTT values = (1-α) * EstimatedRTT + α * SampleRTT = 0.9 * EstimatedRTT + 0.1 * SampleRTT
 
-# 3.6 principles of congestion control
+<!-- # 3.6 principles of congestion control
 
 # 3.7 TCP congestion control
-cwnd
+
+cwnd -->
