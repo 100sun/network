@@ -696,10 +696,10 @@ A -> B : no seq#, ack# 1478, no data, SYN=0, ACK=1, FIN=1
 
 ### how to make checksum
 
-<img src="./checksum.jpg" height="200"/>
+<img src="./checksum.jpg" width="400">
 
 1. all the segment data / 16bit
-2. sum all the 16bits<br/>if sum>=16bit: wraparound
+2. sum all the 16bits if sum>=16bit: wraparound
 3. until the end of data
 4. checksum = 1's complement of total sum
 
