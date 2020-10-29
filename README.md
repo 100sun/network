@@ -136,7 +136,7 @@ the physical materials that are used to store or transmit information in data co
 ### hierarchy structure
 
 host < access ISP < regional ISP < IXP < Tier 1 ISP or Content Provider<Br/>
-<img src="./packet-delay" height="200">
+<img src="./packet-delay.jpg" height="200">
 
 * A content provider(ex. Google) has its own **content provider network** in its own data center
 * Internet eXchange Points help create shorter, more direct routes for ISPs and CDNs.
