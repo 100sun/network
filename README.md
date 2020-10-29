@@ -162,10 +162,11 @@ the physical materials that are used to store or transmit information in data co
 ### hierarchy structure
 
 host < access ISP < regional ISP < IXP < Tier 1 ISP or Content Provider<Br/>
-<img src="./packet-delay.jpg" height="150">
+<img src="./interconnection-isp.jpg" height="150">
 
-* A content provider(ex. Google) has its own **content provider network** in its own data center
-* Internet eXchange Points help create shorter, more direct routes for ISPs and CDNs.
+* Internet eXchange Points & peering link: connects between competitor ISPs
+* Tier 1 commercial ISP e.g. AT&T: national & global coverage
+* **Content** Provider e.g. Google: private network that connects its own data center
 
 # 1.4 Evaluation Metrics in networks
 
@@ -331,6 +332,8 @@ network apps(ex. gmail, game, youtube, zoom, [netflix](#netflix)) work only on *
   2. the socket deleted to *terminate* tcp connection
     - 1RTT + file transmission time for http request(⊃URL) + response(⊃base HTML file)
 2. second object = 2RTT + α
+    1. 1RTT for tcp
+    2. 1RTT + α for http
 
 * **4RTT**+α => long latency
 * need parallel TCP connections <- 4 sockets(∈ OS) needed => overhead for OS
@@ -339,10 +342,11 @@ network apps(ex. gmail, game, youtube, zoom, [netflix](#netflix)) work only on *
 
 #### parallel objects request/response
 
-1. first object
+1. first object = 2RTT + α
     1. 1RTT for tcp: two tcp connection sockets created
     2. 1RTT for http: keep two sockets
-2. second object: 1RTT for http 
+2. second object = 1RTT + α
+    1. 1RTT + α for http
 
 * **3RTT**+α
 * need only 1 TCP connection <- 1 sockets(∈ OS) needed => no overhead for OS
@@ -727,18 +731,19 @@ A -> B : no seq#, ack# 1478, no data, SYN=0, ACK=1, FIN=1
 ### ARQ methods
 
 1. stop-and-wait method: 1 data packet at a time => U<sub>sender</sub> = 0.027%
+  + duplicate packet: discard it and send its ACK again
 2. **pipelining** method: **N** data packets at a time using window => U<sub>sender</sub> = N * 0.027% => **throughput↑** 
+  + duplicate packet: not exist
 
 #### pipelined protocols
 
 ||go-back-N|selective repeat|
 |---|---|---|
-|senders sends| unack'ed packets up to N in order | unack'ed packets up to N out of order |
+|senders sends| unack'ed packets up to N in order | unack'ed packets up to N out of order(=> receiver buffer make order) |
 |sender sets timer for|the **first** unack'ed packet|**each** unack'ed packets|
 |sender timeout(x)|retransmit **N**<Br/>: packets whose seq# >= x in window|retransmit **1**<Br/>: for each unack'ed packets|
 |receiver sends|**only cumulative ACK** == 1(no window) |**all individual ACK** == N(==[rwnd](#tcp-segment-format))|
 |after packet loss|**discard** all the packets and **go back** to the last cumulative ACK and send it again|**buffer** all the packets|
-|duplicate packet|not exist|discard the packet and send cumulative ACK|
 
 * sender can send N packets up to windows size N without receiving its before ACK
 * sendBase = windows are moved after seq#. of ack'ed when received ACK
