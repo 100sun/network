@@ -122,7 +122,7 @@ the physical materials that are used to store or transmit information in data co
 ### circuit switching VS packet switching 
 
 | circuit switching | packet switching |
-| ---------------- | ---------------- |
+| ------------------------ | ---------------- |
 | physical path | no physical path |
 | call setup, resource reservation<br/>(in adv, the entire bandwidth is reserved) | no call setup, no resource reservation |
 | how to allocate channel? <br/>FrequencyDM, TimeDM | how transmit?<br/> store-and-forward transmission: storing(waiting) bits of packets in the router until becoming a packet && signal and then forwarding it to the next router |
@@ -136,7 +136,7 @@ the physical materials that are used to store or transmit information in data co
 ### hierarchy structure
 
 host < access ISP < regional ISP < IXP < Tier 1 ISP or Content Provider<Br/>
-<img src="https://cs.pomona.edu/classes/po181u/slides/lec2/images/netofnets2.png" height="200">
+<img src="./packet-delay" height="200">
 
 * A content provider(ex. Google) has its own **content provider network** in its own data center
 * Internet eXchange Points help create shorter, more direct routes for ISPs and CDNs.
