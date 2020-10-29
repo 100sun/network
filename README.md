@@ -696,7 +696,7 @@ A -> B : no seq#, ack# 1478, no data, SYN=0, ACK=1, FIN=1
 
 ### how to make checksum
 
-<img src="./checksum.jpg" height="100"/>
+<img src="./checksum.jpg" height="200"/>
 
 1. all the segment data / 16bit
 2. sum all the 16bits<br/>if sum>=16bit: wraparound
