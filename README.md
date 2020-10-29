@@ -657,17 +657,17 @@ A. Seq=43, ACK=80 (host ACKs receipt of echoed 'C')
 * MSS = 512
 
 ``` md
-A -> B : seq# 451, no ack#, data 512 bytes, *SYN=1*, *ACK=0* : handshaking 1
-B -> A : seq# 103, ack# 963, data 512 bytes, *SYN=1*, ACK=1 : handshaking 2
-A -> B : seq# 963, ack# 615, data 512 bytes, SYN=0, ACK=1 : handshaking 3
+A -> B : seq# 451, no ack#, data 512 bytes, *SYN=1*, *ACK=0*, FIN=0 : handshaking 1
+B -> A : seq# 103, ack# 963, data 512 bytes, *SYN=1*, ACK=1, FIN=0 : handshaking 2
+A -> B : seq# 963, ack# 615, data 512 bytes, SYN=0, ACK=1, FIN=0 : handshaking 3
 ============**EST** finished, no more handshaking===============
-B -> A : seq# 615, ack# 1475, data 154 bytes
-A -> B : seq# 1475, ack# 1629, data 1 byte, *FIN=1*
+B -> A : seq# 615, ack# 1475, data 154 bytes, SYN=0, ACK=1, FIN=0
+A -> B : seq# 1475, ack# 1629, data 1 byte, SYN=0, ACK=1, *FIN=1*
 ===============**FIN_WAIT_1**===============
-B -> A : seq# 1629, ack# 1476, data 1 byte, *FIN=1* 
+B -> A : seq# 1629, ack# 1476, data 1 byte, SYN=0, ACK=1, *FIN=1* 
 ===============**FIN_WAIT_2**===============
 ===============**TIMED_WAIT** to get the last ACK bit, after got both FIN bits===============
-A -> B : no seq#, ack# 1478, no data
+A -> B : no seq#, ack# 1478, no data, SYN=0, ACK=1, FIN=1
 ===============**closed** connection===============
 ```
 
@@ -705,7 +705,9 @@ A -> B : no seq#, ack# 1478, no data
 
 ## 2. packet loss <- ARQ 
 
-### ARQ = packet retransmission method
+### Automatic Repeat reQest 
+
+= packet retransmission method
 
 * **timeout**: after periods of time allowed to elapse to wait ACK for sender
 * **sequence number**
@@ -722,9 +724,9 @@ A -> B : no seq#, ack# 1478, no data
 > = N * {(L/R) / (2*D<sub>prop</sub> + L/R)}<br />
 > = N * 0.027%
 
-### ARQ types
+### ARQ methods
 
-1. stop-and-wait: 1 data packet at a time => U<sub>sender</sub> = 0.027%
+1. stop-and-wait method: 1 data packet at a time => U<sub>sender</sub> = 0.027%
 2. **pipelining** method: **N** data packets at a time using window => U<sub>sender</sub> = N * 0.027% => **throughput↑** 
 
 #### pipelined protocols
