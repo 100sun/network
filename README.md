@@ -353,12 +353,12 @@ network apps(ex. gmail, game, youtube, zoom, [netflix](#netflix)) work only on *
 
 ## cookies
 
-client can keep user session state in cookie file ex. my id in ebay, amazon
+client can get recommendations, keep user session state(shopping cart, log-on) in **cookie file (∋ cookie header line ∋ user-id** e.g. amazon id, ebay id)
 
-1. HTTP request
-    - if first access: A server creates ID
-    - if not: send my id(∝ each server) w/ cookie headerline
+1. HTTP request w/ cookie file
 2. HTTP response msg
+  + if first access: provides set-cookie=$id (creates ID entry in the backend db)
+  + else: provides cookie-specific action
 
 <details>
 <summary>HTTP message format</summary>
@@ -382,11 +382,10 @@ HTTP request message
 * how to reduce delay?
   1. [Increase Access Link Speed](#1.-origin-server-(+-fatter-access-link)): expensive(2s)
   2. [Install Local Web Cache](#2.-origin-server-+-local-web-cache): cheaper and faster(1.2s) but need version checking
-  3. [Conditional GET method](#3.-Conditional-GET)
 
 ### 1. origin server + fatter access link
 
-***need to be fixed***
+***access link rate ↑ U<sub>access link</sub> ↓ total delay ↓***
 
 #### total delay
 
@@ -436,28 +435,27 @@ consequences
   + Access delay ≈ 0 ∵ U<sub>access link</sub> is less than 0.7 -> it's fine
   + LAN delay = μs
 
-=> total delay = 2s * 0.6 + μs * 0.4 ≈ >1.2s
+=> total delay = 2s * 0.6 + μs * 0.4 ≈ **1.2s**
 
 #### web caches 
 
 web caches = proxy server
 
 * what is proxy server?
-  + client for origin server
-  + server for client
+  + client for origin server && server for client
 * ex? - HTTP request/response
   + originally) client <-> proxy server <-> origin server
   + if same request) client <-> proxy server
 * why web caching? 
-  + to reduce overhead of origin server
   + to reduce response time for client
-  + to support more users for the origin server
-  + to reduce traffic of external server on an institution's access link for local ISP
+  + to reduce overhead for origin server
+  + to support more users for origin server
+  + to increase utilization of access link for local ISP
 * **Conditional GET method**
   + why? objects in web cache have to be up-to-date as same as the original server
   + how? 
-    - HTTP request: if-modified-since: $date
-    - HTTP response: HTTP/1.0 304 Not Modified || HTTP/1.0 200 OK $data
+    - HTTP request ∋ last update date of caches
+    - HTTP response ∋ whether cache is up-to-date + data
 
 # 2.3 Electronic mail
 
