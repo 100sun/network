@@ -572,8 +572,8 @@ how does CDN DNS select "good" CDN node to stream to client? let client decide
 
 logical communication between...
 
-* processes: p1, p2 <-> p1, p2: transport layer
-* hosts: source <-> destination: network layer
+* transport layer between processes: p1, p2 <-> p1, p2
+* network layer between hosts: source <-> destination
 * 1 IP datagram (∋ IP address) > 1 transport-layer segment (∋ port#)
 
 # 3.2 transport-layer services
@@ -588,12 +588,8 @@ logical communication between...
 
 ## Multiplexing and Demultiplexing
 
-|mux|demux|
-|---|---|
-|at sender|at receiver|
-|from source|to destination|
-|add transport header|use transport header|
-|*send* data from 多 sockets to **1 transport segment**|*deliver* 1 received segment to **多 sockets**|
+* **mux**: at sender, from socket to **segment**, by **add**ing port# to transport header
+* **demux**: at receiver, from segment to **appropriate socket**, **detect**ing by IP address + port#
 
 # 3.3 transport-layer protocol
 
@@ -605,7 +601,7 @@ logical communication between...
 |**reliable**, in-order delivery|each UDP segment handled independently -> **unordered delivery, can be lost** => unreliable |
 |**error control**: ~until no data error(checksum, ARQ)<br/>**flow control**: sender considers receiver's data capability(rwnd)|no connection establishment -> no need to save connection state => no delay, **fast speed**|
 |congestion control| **no congestion control** => no data overload in router/switch|
-|for demux, require dest IP address, dest port #<br/>&nbsp; why? 1 app > 1 process > 1 socket<br/>&nbsp; |for demux, require source, dest IP address, source, dest port #<br/>&nbsp; why? - 1 app > **多 processes**(by fork) > 多 sockets<br/>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; - 1 app > 1 process > **多 threads** > 多 sockets|
+|for demux, require IP address, port# of **dest**<br/>&nbsp; why? **1 app** > 1 process > **1 socket**<br/>&nbsp; |for demux, require IP address, port# of **source + dest** <br/>&nbsp; why? - **1 app** > 多 processes(by fork) > **多 sockets**<br/>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; - **1 app** > 1 process > 多 threads > **多 sockets**|
 |web, email, file transfer|streaming multimedia apps, DNS, high-reliability required apps<br/>(∵ add reliability at app. layer)|
 
 # 3.4 transport-layer segment
