@@ -507,9 +507,9 @@ Domain Name System
 
 1. **local DNS server** ≒ default name servers ≒ proxy servers ⊃ **mapping service**
 2. **DNS hierarchy ⊃ root, TLD, authoritative**
-  1. Root DNS server: total 13
-  2. TLD(Top Level Domain) server: com, org, top-level country domains(kr)
-  3. authoritative DNS server: amazon.com, google.com(hostname) ⊃ **mapping service**(IP address)
+    1. Root DNS server: total 13
+    2. TLD(Top Level Domain) server: com, org, top-level country domains(kr)
+    3. authoritative DNS server: amazon.com, google.com(hostname) ⊃ **mapping service**(IP address)
 
 ### by iterated query
 
