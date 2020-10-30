@@ -690,7 +690,7 @@ logical communication between...
 
 ### how to make checksum
 
-<img src="./checksum.jpg" height="200">
+<img src="./checksum.jpg" height="180">
 
 1. all the segment data / 16bit
 2. sum all the 16bits if sum>=16bit: wraparound until the end of data
@@ -711,10 +711,10 @@ logical communication between...
 
 * L = 1KB, R = 1Gbps, D<sub>prop</sub> = 15ms
 
-> U<sub>sender</sub><br/>
+> **U<sub>sender**</sub><br/>
 > = N* (time just for sending / total time)<Br />
 > = N * {D<sub>trans</sub> / 1 RTT + D<sub>trans</sub>)}<br />
-> = N * {(L/R) / (2*D<sub>prop</sub> + L/R)}<br />
+> = **N * {(L/R) / (2*D<sub>prop</sub> + L/R)}**<br />
 > = N * 0.027%
 
 ### ARQ methods
@@ -736,14 +736,14 @@ logical communication between...
 
 * sender can send N packets up to windows size N without receiving its before ACK
 * sendBase = windows are moved after seq#. of ack'ed when received ACK
-* window size↑ throughput↑ packets#. to retransmit↑ 
+* **window size↑ throughput↑** packets#. to retransmit↑ 
 * window size ∝ network congestion, receiver buffer overflow
 * **sequence # >= 2 * window size** ∵ when all the packets in the size of window are lost, duplicate data will be accepted as new. 
 
 ## TCP reliable data transfer
 
 * point-to-point: one sender, one receiver( <=> multi-casting protocol)
-* Full-duplex connection: bi-directional data flow <=> both a and b can be either sender or receiver
+* **Full-duplex** connection: bi-directional data flow <=> both a and b can be either sender or receiver
 
 ### Pipelined transmission
 
