@@ -308,7 +308,7 @@ torrent: peer group send&receive chunks
 |web, email, file transfer|*no loss*|delay ok|elastic|
 |streaming multimedia(video/audio/games), internet telephony(one-time transaction) |*loss-tolerant*|time-sensitive|minimum throughput guarantee|
 
-# 2.3 Web and HTTP
+# 2.3 Web Servers
 
 * www: Webpage > base html file(=frame) > objects > url(=loc of obj file)
 * HTTP layers: HTTP > TCP > IP > ethernet, WiFi
@@ -377,6 +377,7 @@ HTTP request message
 * how to reduce delay?
   1. [Increase Access Link Speed](#1.-origin-server-(+-fatter-access-link)): expensive(2s)
   2. [Install Local Web Cache](#2.-origin-server-+-local-web-cache): cheaper and faster(1.2s) but need version checking
+  3. Install Local Web Cache + GET method
 
 ### 1. origin server + fatter access link
 
@@ -452,7 +453,7 @@ web caches = proxy server
     - HTTP request ∋ last update date of caches
     - HTTP response ∋ whether cache is up-to-date + data
 
-# 2.4 Electronic mail
+# 2.4 Mail Servers
 
 * **User Agents**: mail reader program e.g. outlook
 * **mail servers**: gmail, … ⊃ 1 message queue, N user mailboxes
@@ -489,7 +490,7 @@ mail access protocol
 
 * HTTP: used in the web-based emails to pull webpages objects e.g. gmail, hotmail
 
-# 2.5 DNS
+# 2.5 DNS Servers
 
 Domain Name System
 
@@ -513,7 +514,7 @@ Domain Name System
 
 : between local DNS server and each DNS hierarchy servers
 
-* client -> **local <=> root -> TLD -> authoritative** => client: access to that IP address
+* client -> **local <=> (root -> TLD -> authoritative)** => client: access to that IP address
 
 -> heavy load on local DNS server
 
@@ -521,7 +522,7 @@ Domain Name System
 
 : between at upper level and lower level server
 
-* client -> **local => root -> TLD -> authoritative** => client: access to that IP address
+* client -> **local => root <-> TLD <-> authoritative** => client: access to that IP address
 
 -> heavy load on root DNS server => **caching**
 
@@ -529,7 +530,7 @@ Domain Name System
 
 : Local DNS server caches entries about TLD server
 
-* client -> **local => TLD -> authoritative** => client: access to that IP address
+* client -> **local <=> (TLD -> authoritative)** => client: access to that IP address
   + Cached entries can be out-of-date => mapping entries ⊃ **T**ime**T**o**L**ive entries
 
 # 2.6 video streaming and content distribution networks
