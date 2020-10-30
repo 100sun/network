@@ -210,13 +210,13 @@ Delay taken to deliver a packet in the route of "source => **nodal processing ->
 
 ## throughput
 
-* how much traffic that link can transmit between sender <-> receiver = throughput (bits/sec) 
+* = how much traffic that link can transmit between sender <-> receiver in unit time (bits/sec) 
   + **instantaneous**: throughput at the peak
   + **average**: throughput on the average 
 * throughput ∝ ***bottleneck*** link == ***min(R<sub>s</sub>, R<sub>c</sub>, R/#. connection)***
   + usually the network core(R) is built not to be the bottleneck.
 
-# 1.5 protocol layers, service models
+# 1.5 Simplified OSI Model
 
 ## 5 layers
 
@@ -308,8 +308,8 @@ torrent: peer group send&receive chunks
 
 |ex|data integrity|timing|throughput|
 | ------ |------ |------ | ---- |
-|web, email, file transfer|*no loss*|delay ok|elastic|
-|streaming multimedia(video/audio/games), internet telephony(one-time transaction) |*loss-tolerant*|time-sensitive|minimum throughput guarantee|
+|web, email, file transfer|**no loss**|delay ok|elastic|
+|streaming multimedia(video/audio/games), internet telephony(one-time transaction) |loss-tolerant|**time-sensitive**|**minimum throughput guarantee**|
 
 # 2.3 Web Servers
 
@@ -388,27 +388,24 @@ HTTP request message
 
 #### total delay
 
-presented
+assumptions
 
 * 1Gbps LAN
 * data object size = 0.1Mbits
 * data request rate = 15/s
 * RTT from institutional router to origin servers = 2s
-
-assumptions
-
-* data rate = data object size * data request rate = 0.1 * 15 = 1.5Mbps
 * ***access link rate***: 1.54Mbps ***=> 154Mps***
 
 consequences
 
+* data rate = data object size * data request rate = 0.1 * 15 = 1.5Mbps
 * U<sub>LAN</sub> = data rate / LAN availability = 1.5Mbps / 1Gbps = 0.15%
-* ***U<sub>access link</sub>*** = access link rate / date rate = 1.5Mbps / 1.54Mbps = 99% ***=> 0.99%***
+* ***U<sub>access link</sub>*** = data rate / ***access link rate***  =  1.5Mbps / 1.54Mbps = 99% ***=> 0.99%***
 
 delays
 
 * Internet delay ≈ RTT = 2s
-* ***Access delay*** = [queueing delay](#141-delay) = access link rate / date rate = 1.5Mbps / 1.54Mbps ≈ 1 → ∞ ~ minutes ***=> msecs***
+* ***Access delay*** = [queueing delay](#141-delay) = La/***R***  = 1.5Mbps / 1.54Mbps ≈ 1 → ∞ ~ minutes ***=> msecs***
 * LAN delay = μs
 
 => total delay: 2s + ***m*** + μs ≈ >m ***(+ increase access link rate)*** => total delay: 2s + ***msecs*** + μs ≈ >2s
@@ -664,7 +661,7 @@ logical communication between...
 > B -> A : seq# 1629, ack# 1476, data 1 byte, SYN=0, ACK=1, **FIN=1** <br/>
 > ===============**FIN_WAIT_2**===============<br/>
 > ===============**TIMED_WAIT** to get the last ACK bit, after got both FIN bits===============<br/>
-> A -> B : no seq#, ack# 1478, **no data**, SYN=0, **ACK=1**, FIN=1<br/>
+> A -> B : seq# 1476, ack# 1478, **no data**, SYN=0, **ACK=1**, FIN=1<br/>
 > ===============**closed** connection===============<br/>
 
 * A transmits 1111 bytes to B
