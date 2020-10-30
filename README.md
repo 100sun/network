@@ -459,11 +459,11 @@ web caches = proxy server
 
 # 2.3 Electronic mail
 
-* User Agents: mail reader program e.g. outlook
-* mail servers: gmail, …
-* protocols: SMTP, POP3, IMAP, …
+* **User Agents**: mail reader program e.g. outlook
+* **mail servers**: gmail, … ⊃ 1 message queue, N user mailboxes
+* **protocols**: SMTP, POP3, IMAP, …
 
-=> UA: write -> (SMTP) -> message queue of mail server -> (TCP < SMTP) -> mailbox of mail server -> (POP, IMAP, HTTP) -> UA: read
+=> **UA: write -> (SMTP) -> message queue** of mail server **-> (**TCP < **SMTP) -> mailbox** of mail server **-> (POP, IMAP, HTTP) -> UA: read**
 
 ## push: SMTP
 
@@ -471,31 +471,27 @@ Simple Mail Transfer Protocol: delivery to receiver’s server
 
 |SMTP|HTTP|
 |---|---|
-|port 25|port 80|
+|port **2**5**|port 80**|
 |user -> **push** data -> server|server -> **pull** object -> user|
-|多 objects in meesage w/ 多 protocols|1 object in message|
-|ASCII command(phrase)-response(status-code+phrase) interaction||
-|use [TCP](#Internet-transport-protocols-services) connection ∵ reliability||
+|**多 objects** in meesage w/ 多 protocols|1 object in message|
+|**ASCII command**(phrase)**-response**(status-code+phrase) **interaction**||
+|use **[TCP](#Internet-transport-protocols-services) connection** ∵ reliability||
 
 * direct transfer
-* handshaking(TCP connection first) -> message transfer -> closure
+* **handshaking**(TCP connection first) **-> message transfer -> closure**
 
 ## pull: POP3, IMAP, HTTP
 
 mail access protocol
 
-### POP3 VS IMAP
-
 |POP3|IMAP|
 |---|---|
 |Post Office Protocol ver3|Internet Access Protocol|
-|1. *download & delete* mode(cannot re-read)<br/>2. *download & keep* mode(copies on different clients)<br/>=>terminate TCP connection|*keep* all messages in 1 server<br/>=>keep TCP connection|
-|*No* mail folder organization|Allows user to organize messages in *folders*|
-|*stateless* across sessions|*keep* user state across sessions|
+|1. **download & delete** mode(cannot re-read)<br/>2. **download & keep** mode(copies on different clients)<br/>=>terminate TCP connection|keep all messages in 1 server<br/>=>**keep** TCP connection|
+|**No** mail folder organization|Allows user to organize messages in **folders**|
+|**stateless** across sessions|**keep** user state across sessions|
 
-### HTTP
-
-: used in the web-based emails e.g. gmail, hotmail
+* HTTP: used in the web-based emails e.g. gmail, hotmail
 
 # 2.4 DNS
 
