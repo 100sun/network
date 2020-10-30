@@ -466,16 +466,16 @@ web caches = proxy server
 
 Simple Mail Transfer Protocol: delivery to receiver’s server
 
+* direct transfer
+* **handshaking**(TCP connection first) **-> message transfer -> closure**
+
 |SMTP|HTTP|
 |---|---|
 |port **2**5**|port 80**|
 |user -> **push** data -> server|server -> **pull** object -> user|
 |**多 objects** in meesage w/ 多 protocols|1 object in message|
 |**ASCII command**(phrase)**-response**(status-code+phrase) **interaction**||
-|use **[TCP](#Internet-transport-protocols-services) connection** ∵ reliability||
-
-* direct transfer
-* **handshaking**(TCP connection first) **-> message transfer -> closure**
+|use **TCP connection** ∵ reliability||
 
 ## pull: POP3, IMAP, HTTP
 
