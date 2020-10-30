@@ -639,10 +639,10 @@ logical communication between...
 * Error-free
 * Assume connection already established
 
-> B. Seq=78, ACK=42, data = 'B'
-> A. Seq=42, ACK=79, data = 'C' (user sends 'C')
-> B. Seq=79, ACK=43, data = 'C' (host ACKs receipt of 'C' / echoes back 'C')
-> A. Seq=43, ACK=80 (host ACKs receipt of echoed 'C')
+> B. Seq=78, ACK=42, data = 'B'<br/>
+> A. Seq=42, ACK=79, data = 'C' (user sends 'C')<br/>
+> B. Seq=79, ACK=43, data = 'C' (host ACKs receipt of 'C' / echoes back 'C')<br/>
+> A. Seq=43, ACK=80 (host ACKs receipt of echoed 'C')<br/>
 
 #### ex. general
 
