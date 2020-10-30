@@ -258,7 +258,7 @@ network apps(ex. gmail, game, youtube, zoom, [netflix](#netflix)) work only on *
 ||1 server -> N clients|1 server -> 1 client & N peers -> N peers(redistribute)|
 |(server)time to send N copies|NF/u<sub>s</sub>|F/u<sub>s</sub> & NF/(u<sub>s</sub>+ ∑u<sub>i</sub>)|
 |(client)time to download copies|F/d<sub>min</sub>|F/d<sub>min</sub>|
-|=> time to distribute file to clients|**D<sub>c-s</sub>≥max{NF/u<sub>s</sub>, F/d<sub>min</sub>}**|**D<sub>p-p</sub>≥max{NF/(F/u<sub>s</sub>, u<sub>s</sub>+ ∑u<sub>i</sub>, F/d<sub>min</sub>}**|
+|=> time to distribute file to clients|**D<sub>c-s</sub>≥max{NF/u<sub>s</sub>, F/d<sub>min</sub>}**|**D<sub>p-p</sub>≥max{F/u<sub>s</sub>, NF/(u<sub>s</sub>+ ∑u<sub>i</sub>), F/d<sub>min</sub>}**|
 |(graph)Distribution-time/N|steeply linear|steadily curved|
 
 ### P2P: BitTorrent 
