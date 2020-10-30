@@ -62,6 +62,7 @@ ex. mobile network, home networks, institutional networks
 * [network edge](#12-network-edge) ⊃ end **hosts = end systems** ⊃ clients and servers
 * [network core](#13-network-core): connects edges ⊃ interconnected devices: **routers, switches**
 * [physical media](#122-physical-media): wired, wireless communication **links**
+  + bandwidth ⬆ internet speed ⬆
 
 # 1.2 Network Edge
 
@@ -69,7 +70,6 @@ ex. mobile network, home networks, institutional networks
 
 * **end host -> Access Network -> edge router** => ISP(Internet Service Provider)
 * connects subscribers to **a particular service provider** and, through the carrier network, to other networks such as the Internet.
-* bandwidth ⬆ internet speed ⬆
 * (central office) **shared / dedicated**
 
 ### ex1. Digital Subscriber Line
@@ -78,7 +78,7 @@ ex. mobile network, home networks, institutional networks
 
 0. DSL modem -> splitter
 1. **DSL phone line**: only one user monopolies this connection
-    - voice(~4kHz) VS data(4kHz~)
+    - voice(~ 4kHz) VS data(4kHz ~)
 2. (central office) DSL Access Multiplexer
 3. voice->telephone network VS data->ISP
 
