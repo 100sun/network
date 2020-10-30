@@ -693,8 +693,7 @@ logical communication between...
 <img src="./checksum.jpg" width="200">
 
 1. all the segment data / 16bit
-2. sum all the 16bits if sum>=16bit: wraparound
-3. until the end of data
+2. sum all the 16bits if sum>=16bit: wraparound until the end of data
 4. checksum = 1's complement of total sum
 
 ## 2. packet loss <- ARQ 
