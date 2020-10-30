@@ -231,11 +231,11 @@ Delay taken to deliver a packet in the route of "source => **nodal processing ->
 
 ##### Chp 2 Application Layer
 
-# 2.1 principles of network applications
+# 2.1 Structure of Network Application 
 
 network apps(ex. gmail, game, youtube, zoom, [netflix](#netflix)) work only on **end systems** not on network core devices
 
-## network app. structure
+## client-server model VS P2P model
 
 | model | data consumer | data provider | for scaling | e.g.|
 | ---- |---- | ---- | ---- | ----|
@@ -244,7 +244,7 @@ network apps(ex. gmail, game, youtube, zoom, [netflix](#netflix)) work only on *
 
 * peer = end systems which work equally in equal protocol layer
 
-### File distribution 
+## File distribution 
 
 * file size F
 * N: variable #. client 
@@ -261,7 +261,7 @@ network apps(ex. gmail, game, youtube, zoom, [netflix](#netflix)) work only on *
 |=> time to distribute file to clients|**D<sub>c-s</sub>≥max{NF/u<sub>s</sub>, F/d<sub>min</sub>}**|**D<sub>p-p</sub>≥max{NF/(F/u<sub>s</sub>, u<sub>s</sub>+ ∑u<sub>i</sub>, F/d<sub>min</sub>}**|
 |(graph)Distribution-time/N|steeply linear|steadily curved|
 
-#### P2P: BitTorrent 
+### P2P: BitTorrent 
 
 torrent: peer group send&receive chunks
 
@@ -276,12 +276,12 @@ torrent: peer group send&receive chunks
   2. every 10 secs: **B** peer **updates** its **top 4 providers**, starts sending chunks to A peer
   3. **A** peer **updates** its **top 4 providers**
 
-## application layer protocol 
+# 2.2 Protocol of Application Layer 
 
 * open protocols: SMTP, HTTP, FTP, Telnet
 * proprietary protocols: skype
 
-### defines
+## defines
 
 [in details...](#format)
 
@@ -290,9 +290,7 @@ torrent: peer group send&receive chunks
 3. semantics: how to *interpret* fields
 4. rules
 
-## ex
-
-### protocols by occasion 
+## protocols by occasion 
 
 |description|app. proto|trans. proto|
 |--|--|--|
@@ -303,14 +301,14 @@ torrent: peer group send&receive chunks
 |[Domain Name System](#24-DNS)|DNS|UDP(fast speed), TCP|
 |[video streaming](#26-video-streaming-and-content-distribution-networks)|RTP, HTTP|UDP(fast speed), TCP|
 
-### required transport services by occasion 
+## required transport services by occasion 
 
 |ex|data integrity|timing|throughput|
 | ------ |------ |------ | ---- |
 |web, email, file transfer|*no loss*|delay ok|elastic|
 |streaming multimedia(video/audio/games), internet telephony(one-time transaction) |*loss-tolerant*|time-sensitive|minimum throughput guarantee|
 
-# 2.2 Web and HTTP
+# 2.3 Web and HTTP
 
 * www: Webpage > base html file(=frame) > objects > url(=loc of obj file)
 * HTTP layers: HTTP > TCP > IP > ethernet, WiFi
@@ -454,7 +452,7 @@ web caches = proxy server
     - HTTP request ∋ last update date of caches
     - HTTP response ∋ whether cache is up-to-date + data
 
-# 2.3 Electronic mail
+# 2.4 Electronic mail
 
 * **User Agents**: mail reader program e.g. outlook
 * **mail servers**: gmail, … ⊃ 1 message queue, N user mailboxes
@@ -491,7 +489,7 @@ mail access protocol
 
 * HTTP: used in the web-based emails to pull webpages objects e.g. gmail, hotmail
 
-# 2.4 DNS
+# 2.5 DNS
 
 Domain Name System
 
