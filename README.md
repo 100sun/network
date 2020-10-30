@@ -6,7 +6,9 @@
 
 ### [Chp 1 Computer Networks and the Internet](#chp-1-computer-networks-and-the-internet-1)
 
+* [Contents](#contents)
 * [1.1 what is the Internet?](#11-what-is-the-internet)
+* [Overview](#overview)
 * [1.2 Network Edge](#12-network-edge)
 * [1.3 Network Core](#13-network-core)
 * [1.4 Evaluation Metrics in networks](#14-evaluation-metrics-in-networks)
@@ -14,10 +16,11 @@
 
 ### [Chp 2 Application Layer](#chp-2-application-layer-1)
 
-* [2.1 principles of network applications](#21-principles-of-network-applications)
-* [2.2 Web and HTTP](#22-web-and-http)
-* [2.3 Electronic mail](#23-electronic-mail)
-* [2.4 DNS](#24-dns)
+* [2.1 Structure of Network Application](#21-structure-of-network-application)
+* [2.2 Protocol of Application Layer](#22-protocol-of-application-layer)
+* [2.3 Web Servers](#23-web-servers)
+* [2.4 Mail Servers](#24-mail-servers)
+* [2.5 DNS Servers](#25-dns-servers)
 * [2.6 video streaming and content distribution networks](#26-video-streaming-and-content-distribution-networks)
 
 ### [Chp 3 Transport Layer](#chp-3-transport-layer-1)
