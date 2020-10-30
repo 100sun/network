@@ -90,7 +90,7 @@ ex. mobile network, home networks, institutional networks
 1. **coaxial cable**: cable company provide 1 signal to 多 users
     - how? by **FDM**(Frequency Division Multiplexing) : divide the broadband with multiple **channels** (video-cnn, ... & data)
 2. (central office) CMTS = Cable Modem Termination System = cable company
-3. HFS(Hybrid Fiber Coax)
+3. HFC(Hybrid Fiber Coax)
 4. ISP
 
 ### ex3. Home Network
@@ -116,10 +116,10 @@ ex. mobile network, home networks, institutional networks
 | [end host(wireless)---(**wireless**)---WAP---(wire)---edge router]| (routers) | [edge router -----end host]
 
 * shared network
-1. WiFi(Wireless Fidelity):**wireless LANs** within the building(coverage:35m)
-2. cellular network(3G,4G(LTE),5G): **wide-area wireless access** provided by cellular operator(coverage:Nkm)
+1. WiFi(Wireless Fidelity):**wireless LAN** within the building(coverage:35m)
+2. cellular network(3G,4G(LTE),5G): **wireless WAN** provided by cellular operator(coverage:Nkm)
 
-<img src="https://ars.els-cdn.com/content/image/3-s2.0-B9780128014134000131-f13-19-9780128014134.jpg" height = "100">
+<img src="https://ars.els-cdn.com/content/image/3-s2.0-B9780128014134000131-f13-19-9780128014134.jpg" height = "150">
 
 ## Physical Media
 
