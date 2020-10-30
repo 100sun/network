@@ -236,14 +236,14 @@ network apps(ex. gmail, game, youtube, zoom, [netflix](#netflix)) work only on *
 
 ## network app. structure
 
-| model | data consumer | data provider | for scaling | 
-| ---- |---- | ---- | ---- | 
-| **client-server model** | client<br/>: should be always on<br/>: has a permanent IP address | server<br/>: can be on/off<br/>: has a dynamic IP address | servers↑data centers↑ | 
-| [**PeerToPeer model**](#25-P2P-applications) | all the arbitrary end systems: can be on/off<br/>: has a dynamic IP address || peer↑(self-scalability) | 
+| model | data consumer | data provider | for scaling | e.g.|
+| ---- |---- | ---- | ---- | ----|
+| **client-server model** | **client**<br/>: should be **always on**<br/>: has a **permanent** IP address | server<br/>: can be on/off<br/>: has a dynamic IP address | servers↑data centers↑ | |
+| **PeerToPeer model** | all the arbitrary end systems: can be **on/off**<br/>: has a **dynamic** IP address || peer↑(**self-scalability**) | file distribution(BitTorrent) , VoIP (Skype) |
 
 * peer = end systems which work equally in equal protocol layer
 
-### File distribution on network app.
+### File distribution 
 
 * file size F
 * N: variable #. client 
@@ -260,15 +260,7 @@ network apps(ex. gmail, game, youtube, zoom, [netflix](#netflix)) work only on *
 |=> time to distribute file to clients|**D<sub>c-s</sub>≥max{NF/u<sub>s</sub>, F/d<sub>min</sub>}**|**D<sub>p-p</sub>≥max{NF/(F/u<sub>s</sub>, u<sub>s</sub>+ ∑u<sub>i</sub>, F/d<sub>min</sub>}**|
 |(graph)Distribution-time/N|steeply linear|steadily curved|
 
-### P2P applications
-
-* A peer can be both client and server 
-* no need for always-on server
-* changing IP addresses
-* good scalability
-* e.g. BitTorrent, VoIP (Skype) 
-
-#### BitTorrent
+#### P2P: BitTorrent 
 
 * requesting chunks
   1. file divided into 256Kb chunks
@@ -490,8 +482,9 @@ mail access protocol
 |1. **download & delete** mode(cannot re-read)<br/>2. **download & keep** mode(copies on different clients)<br/>=>terminate TCP connection|keep all messages in 1 server<br/>=>**keep** TCP connection|
 |**No** mail folder organization|Allows user to organize messages in **folders**|
 |**stateless** across sessions|**keep** user state across sessions|
+|retrieve PC 外 X| all PC **synchronization**|
 
-* HTTP: used in the web-based emails e.g. gmail, hotmail
+* HTTP: used in the web-based emails to pull webpages objects e.g. gmail, hotmail
 
 # 2.4 DNS
 
@@ -499,24 +492,25 @@ Domain Name System
 
 ## DNS services
 
-* mapping service: hostname -> (DNS) -> IP address (32 bit)
-* host aliasing: alias name(typed URL) -> (DNS) -> canonical name(real URL)
-* mail server aliasing 
-* load distribution: replicated Web servers(many IP addresses correspond to 1 hostname) ∵ scaling
+* **mapping service**: hostname -> (DNS) -> IP address (32 bit)
+* **host aliasing**: alias name(typed URL) -> (DNS) -> canonical name(real URL)
+* **mail server** aliasing: provide mail server of specific domain
+* **load distribution**: replicated Web servers(many IP addresses correspond to 1 hostname)
+  + (<->no centralized DNS ∵ single point of failure, traffic volume, distant centralized db, no scaling) 
 
 ## DNS servers
 
-* local DNS server ≒ default name servers ≒ proxy servers ⊃ mapping service
-* DNS hierarchy
+1. **local DNS server** ≒ default name servers ≒ proxy servers ⊃ **mapping service**
+2. **DNS hierarchy ⊃ root, TLD, authoritative**
   1. Root DNS server: total 13
   2. TLD(Top Level Domain) server: com, org, top-level country domains(kr)
-  3. authoritative DNS server: amazon.com, google.com ⊃ mapping service
+  3. authoritative DNS server: amazon.com, google.com(hostname) ⊃ **mapping service**(IP address)
 
 ### by iterated query
 
-: between local DNS server and 1 of DNS hierarchy servers
+: between local DNS server and each DNS hierarchy servers
 
-* client -> *local <=> root -> TLD -> authoritative* => client: access to that IP address
+* client -> **local <=> root -> TLD -> authoritative** => client: access to that IP address
 
 -> heavy load on local DNS server
 
@@ -524,7 +518,7 @@ Domain Name System
 
 : between at upper level and lower level server
 
-* client -> *local => root -> TLD -> authoritative* => client: access to that IP address
+* client -> **local => root -> TLD -> authoritative** => client: access to that IP address
 
 -> heavy load on root DNS server => **caching**
 
@@ -532,7 +526,7 @@ Domain Name System
 
 : Local DNS server caches entries about TLD server
 
-* client -> *local -> TLD -> authoritative* => client: access to that IP address
+* client -> **local => TLD -> authoritative** => client: access to that IP address
   + Cached entries can be out-of-date => mapping entries ⊃ **T**ime**T**o**L**ive entries
 
 # 2.6 video streaming and content distribution networks
