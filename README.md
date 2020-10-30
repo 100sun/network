@@ -327,10 +327,10 @@ network apps(ex. gmail, game, youtube, zoom, [netflix](#netflix)) work only on *
 #### parallel objects request/response
 
 1. first object = 2RTT + α
-  1. new TCP connection socket is *created* to initiate tcp connection
-    - 1RTT for tcp connection request/response 
-  2. the socket deleted to *terminate* tcp connection
-    - 1RTT + file transmission time for http request(⊃URL) + response(⊃base HTML file)
+    1. new TCP connection socket is *created* to initiate tcp connection
+      - 1RTT for tcp connection request/response 
+    2. the socket deleted to *terminate* tcp connection
+      - 1RTT + file transmission time for http request(⊃URL) + response(⊃base HTML file)
 2. second object = 2RTT + α
     1. 1RTT for tcp
     2. 1RTT + α for http
@@ -644,6 +644,7 @@ logical communication between...
 * Assume connection already established
 
 ``` 
+
 B. Seq=78, ACK=42, data = 'B'
 A. Seq=42, ACK=79, data = 'C' (user sends 'C')
 B. Seq=79, ACK=43, data = 'C' (host ACKs receipt of 'C' / echoes back 'C')
