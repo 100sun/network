@@ -646,14 +646,11 @@ logical communication between...
 
 #### ex. general
 
-``` 
-
-seq # = the last received ACK #
-ack # = the last received seq # + size of data(< MSS)
-A's initial seq# is x(451)
-B's initial seq# is y(103)
-MSS = 512
-```
+* seq # = the last received ACK #
+* ack # = the last received seq # + size of data(< MSS)
+* A's initial seq# is x(451)
+* B's initial seq# is y(103)
+* MSS = 512
 
 > A -> B : seq# 451, no ack#, data 512 bytes, ***SYN=1, ACK=0***, FIN=0 : handshaking 1<br/>
 > B -> A : seq# 103, ack# 963, data 512 bytes, ***SYN=1***, ACK=1, FIN=0 : handshaking 2<br/>
@@ -678,7 +675,7 @@ MSS = 512
 * there could be error under the network layer but *transport layer* makes *app layer* to feel that there is *no error*
 * so let's resolve any occasion that can occur error
   1. Receiver received packet, but it's wrong data. => **bit error**
-  2. packet loss, ACK loss, premature timeout, delayed ACK => **packet loss**
+  2. **packet loss, ACK loss, premature timeout, delayed ACK** => **packet loss**
 
 ## 1. bit error <- checksum
 
@@ -693,7 +690,7 @@ MSS = 512
 
 ### how to make checksum
 
-<img src="./checksum.jpg" width="150">
+<img src="./checksum.jpg" width="200">
 
 1. all the segment data / 16bit
 2. sum all the 16bits if sum>=16bit: wraparound
