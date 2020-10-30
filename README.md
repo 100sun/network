@@ -627,10 +627,10 @@ logical communication between...
 
 #### (6bits)flags
 
-* ACK: to check validity of ACK#, ACK==0 means ignore ACK# (∵ first packet)
-* ReSeT, SYNchronization: to establish tcp connection(handsha ke)
-  + SYN: SYN==1 means the first packet from sender
-* FINale: to close tcp connection, FIN==1 means the last packet from sender
+* ACK: to check validity of ACK#, **ACK==0** means **ignore ACK#** (∵ first packet)
+* ReSeT, SYNchronization: to establish tcp connection(handshake)
+  + SYN: **SYN==1** means the **first packet from sender**
+* FINale: to close tcp connection, **FIN==1** means the **last packet from sender**
 
 ### 3-way handshake
 
