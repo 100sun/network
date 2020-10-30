@@ -484,10 +484,10 @@ mail access protocol
 |POP3|IMAP|
 |---|---|
 |Post Office Protocol ver3|Internet Access Protocol|
-|1. **download & delete** mode(cannot re-read)<br/>2. **download & keep** mode(copies on different clients)<br/>=>terminate TCP connection|keep all messages in 1 server<br/>=>**keep** TCP connection|
+|1. **download & delete** mode(retrieve PC 外 X read)<br/>2. **download & keep** mode(copies on different clients=>read ok on N clients)|keep all messages in 1 server|
+|after downloading, **terminate TCP connection**|after downloading, **keep** TCP connection|
 |**No** mail folder organization|Allows user to organize messages in **folders**|
 |**stateless** across sessions|**keep** user state across sessions|
-|retrieve PC 外 X| all PC **synchronization**|
 
 * HTTP: used in the web-based emails to pull webpages objects e.g. gmail, hotmail
 
