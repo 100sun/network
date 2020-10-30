@@ -719,7 +719,7 @@ logical communication between...
 
 ### ARQ methods
 
-1. stop-and-wait method: 1 data packet at a time => U<sub>sender</sub> = 0.027%
+1. **stop-and-wait** method: **1** data packet at a time => U<sub>sender</sub> = 0.027%
     - duplicate packet: discard it and send its ACK again
 2. **pipelining** method: **N** data packets at a time using window => U<sub>sender</sub> = N * 0.027% => **throughput↑** 
     - duplicate packet: not exist
