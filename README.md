@@ -78,7 +78,7 @@ ex. mobile network, home networks, institutional networks
 
 0. DSL modem -> splitter
 1. **DSL phone line**: only one user monopolies this connection
-  +  voice(~4kHz) VS data(4kHz~)
+    - voice(~4kHz) VS data(4kHz~)
 2. (central office) DSL Access Multiplexer
 3. voice->telephone network VS data->ISP
 
