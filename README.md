@@ -639,13 +639,10 @@ logical communication between...
 * Error-free
 * Assume connection already established
 
-``` 
-
-B. Seq=78, ACK=42, data = 'B'
-A. Seq=42, ACK=79, data = 'C' (user sends 'C')
-B. Seq=79, ACK=43, data = 'C' (host ACKs receipt of 'C' / echoes back 'C')
-A. Seq=43, ACK=80 (host ACKs receipt of echoed 'C')
-```
+> B. Seq=78, ACK=42, data = 'B'
+> A. Seq=42, ACK=79, data = 'C' (user sends 'C')
+> B. Seq=79, ACK=43, data = 'C' (host ACKs receipt of 'C' / echoes back 'C')
+> A. Seq=43, ACK=80 (host ACKs receipt of echoed 'C')
 
 #### ex. general
 
@@ -655,20 +652,18 @@ A. Seq=43, ACK=80 (host ACKs receipt of echoed 'C')
 * B's initial seq# is y(103)
 * MSS = 512
 
-``` md
-A -> B : seq# 451, no ack#, data 512 bytes, *SYN=1*, *ACK=0*, FIN=0 : handshaking 1
-B -> A : seq# 103, ack# 963, data 512 bytes, *SYN=1*, ACK=1, FIN=0 : handshaking 2
-A -> B : seq# 963, ack# 615, data 512 bytes, SYN=0, ACK=1, FIN=0 : handshaking 3
-============**EST** finished, no more handshaking===============
-B -> A : seq# 615, ack# 1475, data 154 bytes, SYN=0, ACK=1, FIN=0
-A -> B : seq# 1475, ack# 1629, data 1 byte, SYN=0, ACK=1, *FIN=1*
-===============**FIN_WAIT_1**===============
-B -> A : seq# 1629, ack# 1476, data 1 byte, SYN=0, ACK=1, *FIN=1* 
-===============**FIN_WAIT_2**===============
-===============**TIMED_WAIT** to get the last ACK bit, after got both FIN bits===============
-A -> B : no seq#, ack# 1478, no data, SYN=0, ACK=1, FIN=1
-===============**closed** connection===============
-```
+> A -> B : seq# 451, no ack#, data 512 bytes, *SYN=1*, *ACK=0*, FIN=0 : handshaking 1
+> B -> A : seq# 103, ack# 963, data 512 bytes, *SYN=1*, ACK=1, FIN=0 : handshaking 2
+> A -> B : seq# 963, ack# 615, data 512 bytes, SYN=0, ACK=1, FIN=0 : handshaking 3
+> ============**EST** finished, no more handshaking===============
+> B -> A : seq# 615, ack# 1475, data 154 bytes, SYN=0, ACK=1, FIN=0
+> A -> B : seq# 1475, ack# 1629, data 1 byte, SYN=0, ACK=1, *FIN=1*
+> ===============**FIN_WAIT_1**===============
+> B -> A : seq# 1629, ack# 1476, data 1 byte, SYN=0, ACK=1, *FIN=1* 
+> ===============**FIN_WAIT_2**===============
+> ===============**TIMED_WAIT** to get the last ACK bit, after got both FIN bits===============
+> A -> B : no seq#, ack# 1478, no data, SYN=0, ACK=1, FIN=1
+> ===============**closed** connection===============
 
 * A transmits 1111 bytes to B
 * B transmits 666 bytes to A
