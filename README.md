@@ -690,7 +690,7 @@ logical communication between...
 
 ### how to make checksum
 
-<img src="./checksum.jpg" height="150">
+<img src="./checksum.jpg" height="200">
 
 1. all the segment data / 16bit
 2. sum all the 16bits if sum>=16bit: wraparound until the end of data
