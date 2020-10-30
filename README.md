@@ -239,7 +239,7 @@ network apps(ex. gmail, game, youtube, zoom, [netflix](#netflix)) work only on *
 
 | model | data consumer | data provider | for scaling | e.g.|
 | ---- |---- | ---- | ---- | ----|
-| **client-server model** | **client**<br/>: should be **always on**<br/>: has a **permanent** IP address | server<br/>: can be on/off<br/>: has a dynamic IP address | servers↑data centers↑ | |
+| **client-server model** | **client**<br/>: can be on/off<br/>: has a dynamic IP address| server<br/>: should be **always on**<br/>: has a **permanent** IP address | servers↑data centers↑ | |
 | **PeerToPeer model** | all the arbitrary end systems: can be **on/off**<br/>: has a **dynamic** IP address || peer↑(**self-scalability**) | file distribution(BitTorrent) , VoIP (Skype) |
 
 * peer = end systems which work equally in equal protocol layer
