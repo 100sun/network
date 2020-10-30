@@ -163,7 +163,7 @@ the physical materials that are used to store or transmit information in data co
 
 **host < access ISP < regional ISP < IXP < Tier 1 ISP or Content Provider**
 <Br/>
-<img src="./interconnection-isp.jpg" height="150">
+<img src="./interconnection-isp.jpg" height="200">
 
 * Internet eXchange Points & peering link: connects between competitor ISPs
 * Tier 1 commercial ISP e.g. AT&T: national & global coverage
