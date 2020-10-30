@@ -88,7 +88,7 @@ ex. mobile network, home networks, institutional networks
 
 0. cable modem -> splitter
 1. **coaxial cable**: cable company provide 1 signal to 多 users
-  + how? by FDM(Frequency Division Multiplexing) : divide the broadband with multiple channels (video-cnn, ... & data)
+    - how? by FDM(Frequency Division Multiplexing) : divide the broadband with multiple channels (video-cnn, ... & data)
 2. (central office) CMTS = Cable Modem Termination System = cable company
 3. HFS(Hybrid Fiber Coax)
 4. ISP
