@@ -646,11 +646,14 @@ logical communication between...
 
 #### ex. general
 
-* seq # = the last received ACK #
-* ack # = the last received seq # + size of data(< MSS)
-* A's initial seq# is x(451)
-* B's initial seq# is y(103)
-* MSS = 512
+``` 
+
+seq # = the last received ACK #
+ack # = the last received seq # + size of data(< MSS)
+A's initial seq# is x(451)
+B's initial seq# is y(103)
+MSS = 512
+```
 
 > A -> B : seq# 451, no ack#, data 512 bytes, ***SYN=1, ACK=0***, FIN=0 : handshaking 1<br/>
 > B -> A : seq# 103, ack# 963, data 512 bytes, ***SYN=1***, ACK=1, FIN=0 : handshaking 2<br/>
