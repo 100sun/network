@@ -587,7 +587,7 @@ logical communication between...
 ## Multiplexing and Demultiplexing
 
 * **mux**: at sender, from socket to **segment**, by **add**ing port# to transport header
-* **demux**: at receiver, from segment to **appropriate socket**, **detect**ing by IP address + port#
+* **demux**: at receiver, from segment to **appropriate socket**, **detect**ing path by IP address + port#
 
 # 3.3 transport-layer protocol
 
@@ -597,7 +597,7 @@ logical communication between...
 |---|---|
 |**connection-oriented, handshaking**|connectionless, no handshaking|
 |**reliable**, in-order delivery|each UDP segment handled independently -> **unordered delivery, can be lost** => unreliable |
-|**error control**: ~until no data error(checksum, ARQ)<br/>**flow control**: sender considers receiver's data capability(rwnd)|no connection establishment -> no need to save connection state => no delay, **fast speed**|
+|**error control**: ~until no data error(checksum, ARQ)<br/>**flow control**: sender considers receiver's data capability(rwnd)|no connection establishment -> no need to save connection state<br/> => no delay, **fast speed**|
 |congestion control| **no congestion control** => no data overload in router/switch|
 |for demux, require IP address, port# of **dest**<br/>&nbsp; why? **1 app** > 1 process > **1 socket**<br/>&nbsp; |for demux, require IP address, port# of **source + dest** <br/>&nbsp; why? - **1 app** > 多 processes(by fork) > **多 sockets**<br/>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; - **1 app** > 1 process > 多 threads > **多 sockets**|
 |web, email, file transfer|streaming multimedia apps, DNS, high-reliability required apps<br/>(∵ add reliability at app. layer)|
