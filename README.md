@@ -570,9 +570,9 @@ how does CDN DNS select "good" CDN node to stream to client? let client decide
 
 logical communication between...
 
-* transport layer between processes: p1, p2 <-> p1, p2
-* network layer between hosts: source <-> destination
-* 1 IP datagram (∋ IP address) > 1 transport-layer segment (∋ port#)
+* **transport** layer between **processes**: p1, p2 <-> p1, p2
+* **network** layer between **hosts**: source <-> destination
+* 1 IP datagram (∋ **IP address**) > 1 transport-layer segment (∋ **port#**)
 
 # 3.2 transport-layer services
 
@@ -581,8 +581,8 @@ logical communication between...
 * a set of APIs.
 * Processes send & receive Messages from app. via Socket. 
   + like a door: application -> (socket) -> transport -> ...
-* after generating socket by client, OS allocate host-local port#
-* 1 client > 1 socket
+* after generating socket by client, **OS allocate host-local port#**
+* **1 client > 1 socket**
 
 ## Multiplexing and Demultiplexing
 
