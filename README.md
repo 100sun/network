@@ -125,14 +125,14 @@ ex. mobile network, home networks, institutional networks
 
 the physical materials that are used to store or transmit information in data communications
 
-* guided media: signals propagate in solid(wired) media
-    - TP(twisted-pair) cable: two insulated copper wires
+* **guided** media: signals propagate in solid(**wired**) media
+    - **TP**(twisted-pair) **cable**: two insulated copper wires
       - behind the ethernet
-    - Coaxial cable: insulated copper conductor
+    - **Coaxial cable**: insulated copper conductor
       - provide broadband but too heavy to use now...
-    - Fiber-optic Cable: glass fiber transmitting pulse
+    - **Fiber-optic Cable**: glass fiber transmitting pulse
       - high speed, low error rate => good for electromagnetic noise
-* unguided media: signals propagate freely(wireless) by electromagnetic wave
+* **unguided** media: signals propagate freely(**wireless**) by electromagnetic wave
     - radio link types: WiFi, cellular, satellite, terrestrial microwave...
 
 # 1.3 Network Core
@@ -140,8 +140,8 @@ the physical materials that are used to store or transmit information in data co
 * connecting network edges by access network by link
 * the mesh of interconnected routers
 * 2 functions of network core
-    1. routing: Get a path from source host -> destination host by using routing algorithms
-    2. forwarding: Move packets from the before router -> the next router by using forwarding table
+    1. **routing**: Get a path from source host -> destination host by using routing algorithms
+    2. **forwarding**: Move packets from the before router -> the next router by using forwarding table
 
 ## Two fundamental approaches to moving data
 
@@ -149,19 +149,20 @@ the physical materials that are used to store or transmit information in data co
 
 | circuit switching | packet switching |
 | ------------------------ | ---------------- |
-| physical path | no physical path |
-| call setup, resource reservation<br/>(in adv, the entire bandwidth is reserved) | no call setup, no resource reservation |
-| how to allocate channel? <br/>FrequencyDM, TimeDM | how transmit?<br/> store-and-forward transmission: storing(waiting) bits of packets in the router until becoming a packet && signal and then forwarding it to the next router |
+| **physical path** | no physical path |
+| **call setup**, resource reservation<br/>(in adv, the entire bandwidth is **reserved**) | no call setup, no resource reservation |
+| how to allocate channel? <br/>**FrequencyDM, TimeDM** | how transmit?<br/> **store-and-forward transmission**: storing(waiting) bits of packets in the router until becoming a packet && signal and then forwarding it to the next router |
 | all packets use same path | packets travel independently |
-| 多 users sharing a link | full link capacity in the time of ***[end-end delay](#delay)*** |
-| low speed, only 10 users | 3.5x speed but after 35 users.. low QoS(Quality of Service) |
+| 多 users sharing a link | **full link capacity** in the time of ***[end-end delay](#delay)*** |
+| **low speed**, only 10 users | 3.5x speed but after 35 users.. **low QoS**(Quality of Service) |
 | traditional telephone networks | handling data |
 
 ## A Network of Networks
 
-### hierarchy structure
+### ISP hierarchy structure
 
-host < access ISP < regional ISP < IXP < Tier 1 ISP or Content Provider<Br/>
+**host < access ISP < regional ISP < IXP < Tier 1 ISP or Content Provider**
+<Br/>
 <img src="./interconnection-isp.jpg" height="150">
 
 * Internet eXchange Points & peering link: connects between competitor ISPs
@@ -174,41 +175,41 @@ delay, packet loss, throughput
 
 ## delay
 
-Delay taken to deliver a packet in the route of "source => nodal processing -> queueing -> transmission -> propagation => destination"
+Delay taken to deliver a packet in the route of "source => **nodal processing -> queueing -> transmission -> propagation** => destination"
 
 * N = no. of packets
 * M = no. of hops
 * a packet/sec = average packet arrival rate 
 * L bits = size of packet (< MTU)
-* R bps = link transmission rate = link capacity = link bandwidth  
+* R bps = **link transmission rate = link capacity = link bandwidth**
 * d meters = distance = length of physical link
 * s = signal speed
 
 <img src="./packet-delay.jpg" height="100"/>
 
-1. **processing** delay: Time taken to check *bits error and destination address* in the packet header before forwarding a packet
-    - d<sub>proc</sub> -> opt to the quality of router
-2. **queueing** delay: Time a job waits in a queue of router until it can be executed 
-    - d<sub>queue</sub> ∝ traffic intensity = I = La/R : so variable -> opt to #. network users
+1. **processing** delay: Time taken to check **bits error and destination address** in the packet header before forwarding a packet
+    - d<sub>proc</sub> -> opt to the quality of **router**
+2. **queueing** delay: Time a job **waits** in a queue of router until it can be executed 
+    - d<sub>queue</sub> ∝ **traffic intensity** = I = La/R : so variable -> opt to #. network **users**
         - I ≈ 0 -> avg d<sub>queue</sub> = small
         - I ≈ 1 -> avg d<sub>queue</sub> = large
         - I > 1 ≈ avg d<sub>queue</sub> = *infinite*
-3. **transmission** delay: Time needed to transmit packets into link 
-    - d<sub>trans</sub> = ***L/R*** -> opt to link transmission rate
-4. **propagation** delay: Time taken to reach the destination from the start point for bits
-    - d<sub>prop</sub> = ***d/s*** -> opt to the amount of data
+3. **transmission** delay: Time needed to transmit packets **into link** 
+    - d<sub>trans</sub> = ***L/R*** -> opt to link **transmission rate**
+4. **propagation** delay: Time taken to **reach the destination** from the start point for bits
+    - d<sub>prop</sub> = ***d/s*** -> opt to the amount of **data**
 * => ***End-To-End delay ≈ (M + N) * L/R***
 
 ## loss
 
 * How many packets are lost in transmission = **PLR**(Packet Loss Rate) (<-> PDR(Packet Delivery Rate))
-* In queueing delay, *arrived packets when data > queue-capacity in a buffer* -> dropped(***loss***)*** => host: re-transmission / network: waste of resource / user: feel delay
+* In **queueing delay**, *arrived packets when data > queue-capacity in a buffer* -> dropped(**loss**) => host: re-transmission / network: waste of resource / user: feel delay
 
 ## throughput
 
 * how much traffic that link can transmit between sender <-> receiver = throughput (bits/sec) 
-  + instantaneous: throughput at the peak
-  + average: throughput on the average 
+  + **instantaneous**: throughput at the peak
+  + **average**: throughput on the average 
 * throughput ∝ ***bottleneck*** link == ***min(R<sub>s</sub>, R<sub>c</sub>, R/#. connection)***
   + usually the network core(R) is built not to be the bottleneck.
 
@@ -221,7 +222,7 @@ Delay taken to deliver a packet in the route of "source => nodal processing -> q
 | | explanation | protocol | Protocol Data Unit for encapsulation | controlled by |
 | ------- | ------- | -----|-----|-----|
 | [application](#21-principles-of-network-applications) | support network application | [HTTP](#22-Web-and-HTTP), [SMTP](#23-electronic-mail), [DNS](#24-DNS), FTP | message | app developer| 
-| [**transport**](#31-transport-layer-services) | data transfer ***between processes*** | TCP, UDP | + segment | OS |
+| [**transport**](#31-transport-layer-services) | data transfer ***between processes*** | TCP, UDP | + segment | **OS** |
 | **network** | **Router** finds path ***between hosts*** | IP, routing protocols | + datagram |OS|
 | **link** | ***Switch*** transfers data between hosts | Ethernet, WiFi | + frame |OS|
 | **physical** | Hubs defines means to transmit bits data on the wire like cable, radio |||OS|
