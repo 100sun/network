@@ -113,11 +113,11 @@ ex. mobile network, home networks, institutional networks
 
 | my network edge | network core | opponent's network edge |
 | ------------- | ------------- |------------- |
-| [end host(wireless)---(wireless)---WAP---(wire)---edge router]| (routers) | [edge router -----end host]
+| [end host(wireless)---(**wireless**)---WAP---(wire)---edge router]| (routers) | [edge router -----end host]
 
 * shared network
-1. WiFi(Wireless Fidelity): wireless LANs within the building(coverage:35m)
-2. cellular network(3G,4G(LTE),5G): wide-area wireless access provided by cellular operator(coverage:Nkm)
+1. WiFi(Wireless Fidelity):**wireless LANs** within the building(coverage:35m)
+2. cellular network(3G,4G(LTE),5G): **wide-area wireless access** provided by cellular operator(coverage:Nkm)
 
 <img src="https://ars.els-cdn.com/content/image/3-s2.0-B9780128014134000131-f13-19-9780128014134.jpg" height = "100">
 
