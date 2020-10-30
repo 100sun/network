@@ -221,10 +221,10 @@ Delay taken to deliver a packet in the route of "source => **nodal processing ->
 
 | | explanation | protocol | Protocol Data Unit for encapsulation | controlled by |
 | ------- | ------- | -----|-----|-----|
-| [application](#21-principles-of-network-applications) | support network application | [HTTP](#22-Web-and-HTTP), [SMTP](#23-electronic-mail), [DNS](#24-DNS), FTP | message | app developer| 
-| [**transport**](#31-transport-layer-services) | data transfer ***between processes*** | TCP, UDP | + segment | **OS** |
+| [application](#chp-2-application-layer-1) | support network application | HTTP, SMTP, DNS, FTP | message | app developer| 
+| [**transport**](#chp-3-transport-layer-1) | data transfer ***between processes*** | TCP, UDP | + segment | **OS** |
 | **network** | **Router** finds path ***between hosts*** | IP, routing protocols | + datagram |OS|
-| **link** | ***Switch*** transfers data between hosts | Ethernet, WiFi | + frame |OS|
+| **link** | **Switch** transfers data between hosts | Ethernet, WiFi | + frame |OS|
 | **physical** | Hubs defines means to transmit bits data on the wire like cable, radio |||OS|
 
 <img src="./encapsulation.jpg" height="300"/>
@@ -449,7 +449,7 @@ web caches = proxy server
   + to support more users for origin server
   + to increase utilization of access link for local ISP
 * **Conditional GET method**
-  + why? objects in web cache have to be up-to-date as same as the original server
+  + why? objects in web cache have to be **up-to-date** as same as the original server
   + how? 
     - HTTP request ∋ last update date of caches
     - HTTP response ∋ whether cache is up-to-date + data
@@ -460,7 +460,7 @@ web caches = proxy server
 * **mail servers**: gmail, … ⊃ 1 message queue, N user mailboxes
 * **protocols**: SMTP, POP3, IMAP, …
 
-=> **UA: write -> (SMTP) -> message queue** of mail server **-> (**TCP < **SMTP) -> mailbox** of mail server **-> (POP, IMAP, HTTP) -> UA: read**
+=> **UA: write -> (SMTP) -> message queue** of mail server **->** (TCP < **SMTP) -> mailbox** of mail server **-> (POP, IMAP, HTTP) -> UA: read**
 
 ## push: SMTP
 
