@@ -262,14 +262,18 @@ network apps(ex. gmail, game, youtube, zoom, [netflix](#netflix)) work only on *
 
 #### P2P: BitTorrent 
 
-* requesting chunks
-  1. file divided into 256Kb chunks
-  2. asks chunks-list to each peer
-  3. ask rarest chunks first
-* sending chunks: tit-for-tat
-  1. every 30 secs: *A* peer *randomly* selects B peer, starts sending chunks to B peer
-  2. every 10 secs: *B* peer *updates* its top 4 providers, starts sending chunks to A peer
-  3. *A* peer *updates* its top 4 providers
+torrent: peer group send&receive chunks
+
+* client
+  1. file divided into 256Kb **chunks**
+  2. get peer list from server
+  3. requesting chunks 
+    1. asks **chunks list** to each peer
+    2. ask **rarest chunks** first
+* server: sending chunks: **tit-for-tat**
+  1. every 30 secs: **A** peer **randomly selects** B peer, starts sending chunks to B peer
+  2. every 10 secs: **B** peer **updates** its **top 4 providers**, starts sending chunks to A peer
+  3. **A** peer **updates** its **top 4 providers**
 
 ## application layer protocol 
 
@@ -531,10 +535,11 @@ Domain Name System
 
 # 2.6 video streaming and content distribution networks
 
-how to stream content to thousands of simultaneous users?
+* video traffic >= 50% of downstream residential ISP traffic
+* then how to stream video content to thousands of simultaneous users?
 
-1. mega server: doesn't scale
-2. store/serve 多 copies of videos at 多 geographically distributed sites => CDN
+1. mega server: doesn't **scale**, **heterogeneity**(capability diff)
+2. store/serve 多 copies of videos at 多 geographically distributed sites => **CDN**
 
 ## Content Distribution Networks
 
@@ -548,15 +553,15 @@ how does CDN DNS select "good" CDN node to stream to client? let client decide
 #### uploading
 
 1. Netflix uploads studio master to Amazon cloud
-2. *create 多 versions* of movie (different endodings) in *cloud*
-3. *upload versions* from cloud to *CDNs*(Akami, limelight, level-3 CDN)
+2. **create 多 versions** of movie (different endodings) in **cloud**
+3. **upload copies** of 多 versions from cloud to **CDNs**(Akami, limelight, level-3 CDN)
 
 #### streaming
 
-1. when client requests(browses) video
-2. *cloud* returns the manifest file *addressing* three 3rd party *CDNs* host/stream Netflix content
-3. client requests *HTTP* to 1 of *CDN*
-4. CDN sends *streaming*
+1. when client **requests**(browses) video
+2. **cloud** returns the manifest file **addressing** three 3rd party **CDNs** host/stream Netflix content
+3. client sends **HTTP** to 1 of **CDN**
+4. CDN sends **streaming**
 
 ##### Chp 3 Transport Layer
 
