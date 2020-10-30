@@ -57,20 +57,20 @@ ex. mobile network, home networks, institutional networks
 
 # Overview
 
-**network edge**(end host->edge router)---(link)---network core(router->ISP)----**network edge**
+**network edge**(end host->edge router)---(link)---**network core**(router->ISP)----**network edge**
 
-* [network edge](#12-network-edge) ⊃ end hosts = end systems ⊃ clients and servers
-* [network core](#13-network-core): connects edges ⊃ interconnected devices: routers, switches
-* [physical media](#122-physical-media): wired, wireless communication links
+* [network edge](#12-network-edge) ⊃ end **hosts = end systems** ⊃ clients and servers
+* [network core](#13-network-core): connects edges ⊃ interconnected devices: **routers, switches**
+* [physical media](#122-physical-media): wired, wireless communication **links**
 
 # 1.2 Network Edge
 
 ## Access Networks
 
-* end host -> Access Network -> edge router => ISP(Internet Service Provider)
-* connects subscribers to a particular service provider and, through the carrier network, to other networks such as the Internet.
-* transmission rate: bandwidth ⬆ internet speed ⬆
-* (central office) shared / dedicated
+* **end host -> Access Network -> edge router** => ISP(Internet Service Provider)
+* connects subscribers to **a particular service provider** and, through the carrier network, to other networks such as the Internet.
+* bandwidth ⬆ internet speed ⬆
+* (central office) **shared / dedicated**
 
 ### ex1. Digital Subscriber Line
 
