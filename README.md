@@ -787,3 +787,7 @@ when sender receives **triple duplicate** accumulative **ACK**(ack# 100), even *
 * **TimeoutInterval = EstimatedRTT + safety margin**
 * EstimatedRTT = avg of cumulative RTT values = 0.9 * EstimatedRTT + **0.1 * SampleRTT**
   + why? when retransmission(didn't receive ACK), throughput↓ timeout⇑ SampleRTT(=the latest RTT value)⇑
+
+# 3.6 principles of congestion control
+
+# 3.7 TCP congestion control
