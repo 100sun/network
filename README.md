@@ -6,59 +6,50 @@
 
 ### [Chp 1 Computer Networks and the Internet](#chp-1-computer-networks-and-the-internet-1)
 
+* [Contents](#contents)
 * [1.1 what is the Internet?](#11-what-is-the-internet)
-  + [components of the Internet](#components-of-the-internet)
 * [Overview](#overview)
 * [1.2 Network Edge](#12-network-edge)
-  + [Access Networks](#access-networks)
-  + [Physical Media](#physical-media)
 * [1.3 Network Core](#13-network-core)
-  + [Two fundamental approaches to moving data](#two-fundamental-approaches-to-moving-data)
-  + [A Network of Networks](#a-network-of-networks)
 * [1.4 Evaluation Metrics in networks](#14-evaluation-metrics-in-networks)
-  + [delay](#delay)
-  + [loss](#loss)
-  + [throughput](#throughput)
 * [1.5 Simplified OSI Model](#15-simplified-osi-model)
-  + [5 layers](#5-layers)
 
 ### [Chp 2 Application Layer](#chp-2-application-layer-1)
 
 * [2.1 Structure of Network Application](#21-structure-of-network-application)
-  + [client-server model VS P2P model](#client-server-model-vs-p2p-model)
-  + [File distribution](#file-distribution)
 * [2.2 Protocol of Application Layer](#22-protocol-of-application-layer)
-  + [defines](#defines)
-  + [protocols by occasion](#protocols-by-occasion)
-  + [required transport services by occasion](#required-transport-services-by-occasion)
 * [2.3 Web Servers](#23-web-servers)
-  + [HTTP response time](#http-response-time)
-  + [cookies](#cookies)
-  + [Web Caches: reduce delay](#web-caches-reduce-delay)
 * [2.4 Mail Servers](#24-mail-servers)
-  + [push: SMTP](#push-smtp)
-  + [pull: POP3, IMAP, HTTP](#pull-pop3-imap-http)
 * [2.5 DNS Servers](#25-dns-servers)
-  + [DNS services](#dns-services)
-  + [DNS servers](#dns-servers)
 * [2.6 video streaming and content distribution networks](#26-video-streaming-and-content-distribution-networks)
-  + [Content Distribution Networks](#content-distribution-networks)
 
 ### [Chp 3 Transport Layer](#chp-3-transport-layer-1)
 
 * [3.1 transport-layer VS network-layer](#31-transport-layer-vs-network-layer)
 * [3.2 transport-layer services](#32-transport-layer-services)
-  + [Socket](#socket)
-  + [Multiplexing and Demultiplexing](#multiplexing-and-demultiplexing)
 * [3.3 transport-layer protocol](#33-transport-layer-protocol)
 * [3.4 transport-layer segment](#34-transport-layer-segment)
-  + [UDP segment format](#udp-segment-format)
-  + [TCP segment format](#tcp-segment-format)
 * [3.5 principles of reliable data transfer](#35-principles-of-reliable-data-transfer)
-  + [reliable data transfer means..](#reliable-data-transfer-means)
-  + [1. bit error <- checksum](#1-bit-error-<--checksum)
-  + [2. packet loss <- ARQ](#2-packet-loss-<--arq)
-  + [TCP reliable data transfer](#tcp-reliable-data-transfer)
+* [3.6 principles of congestion control](#36-principles-of-congestion-control)
+* [3.7 TCP congestion control](#37-tcp-congestion-control)
+
+### [Chp 4 Network Layer](#chp-4-network-layer-1)
+
+* [4.1 Overview of Network layer](#41-overview-of-network-layer)
+* [4.2 Data Plane - overview](#42-data-plane---overview)
+* [4.3 Data Plane - how?](#43-data-plane---how)
+
+### [Chp 5 Network Layer2 : control plane](#chp-5-network-layer2--control-plane-1)
+
+* [4.4 Control Plane - overview](#44-control-plane---overview)
+* [4.5 Control Plane - traditional way](#45-control-plane---traditional-way)
+* [4.4 Control Plane - Internet](#44-control-plane---internet)
+
+### [Chp 6 Physical Layer, Link Layer](#chp-6-physical-layer-link-layer-1)
+
+* [6.1 Physical Layer](#61-physical-layer)
+* [6.2 Data Link Layer](#62-data-link-layer)
+* [6.3 Multiple access protocol](#63-multiple-access-protocol)
 
 <hr/>
 
@@ -195,7 +186,7 @@ the physical materials that are used to store or transmit information in data co
 
 **host < access ISP < regional ISP < IXP < Tier 1 ISP or Content Provider**
 <Br/>
-<img src="./interconnection-isp.jpg" height="200">
+<img src="./img/interconnection-isp.jpg" height="200">
 
 * Internet eXchange Points & peering link: connects between competitor ISPs
 * Tier 1 commercial ISP e.g. AT&T: national & global coverage
@@ -217,7 +208,7 @@ Delay taken to deliver a packet in the route of "source => **nodal processing ->
 * d meters = distance = length of physical link
 * s = signal speed
 
-<img src="./packet-delay.jpg" height="100"/>
+<img src="./img/packet-delay.jpg" height="100"/>
 
 1. **processing** delay: Time taken to check **bits error and destination address** in the packet header before forwarding a packet
     - d<sub>proc</sub> -> opt to the quality of **router**
@@ -259,7 +250,7 @@ Delay taken to deliver a packet in the route of "source => **nodal processing ->
 | **link** | **Switch** transfers data between hosts | Ethernet, WiFi | + frame |OS|
 | **physical** | Hubs defines means to transmit bits data on the wire like cable, radio |||OS|
 
-<img src="./encapsulation.jpg" height="300"/>
+<img src="./img/encapsulation.jpg" height="300"/>
 
 ##### Chp 2 Application Layer
 
@@ -439,7 +430,7 @@ delays
 
 => total delay: 2s + ***m*** + μs ≈ >m ***(+ increase access link rate)*** => total delay: 2s + ***msecs*** + μs ≈ >2s
 
-<img src="./no-caching.jpg" width="250"/> <img src="./web-caching.jpg" width="300"/>
+<img src="./img/no-caching.jpg" width="250"/> <img src="./img/web-caching.jpg" width="300"/>
 
 ### 2. origin server + local web cache
 
@@ -632,7 +623,7 @@ logical communication between...
 
 # 3.4 transport-layer segment
 
-<img src="./tcp-udp-segment.jpg" height="300"/>
+<img src="./img/tcp-udp-segment.jpg" height="300"/>
 
 ## UDP segment format
 
@@ -718,7 +709,7 @@ logical communication between...
 
 ### how to make checksum
 
-<img src="./checksum.jpg" height="180">
+<img src="./img/checksum.jpg" height="180">
 
 1. all the segment data / 16bit
 2. sum all the 16bits if sum>=16bit: wraparound until the end of data
@@ -790,16 +781,176 @@ when sender receives **triple duplicate** accumulative **ACK**(ack# 100), even *
 
 # 3.6 principles of congestion control
 
+* flow control: point-to-point issue
+* congestion control: global issue
+  + network-assisted: detecting loss by feedback of router (single bit || explicit rate)
+  + end-to-end: detecting loss by timeout || 3 dup. ACKs
+
+## congestion control
+
+### scenario
+
+0. timeout / retransmission ⇑
+1. *app. layer*: original data *< trans. layer*: original data + **retransmitted** data 
+2. **goodput** ⇓
+
 # 3.7 TCP congestion control
+
+= End-To-End congestion control
+
+## TCP scenario 
+
+### congestion window
+
+cwnd **∝** network
+
+1. 1 MSSS
+1. **slow start**
+  + 1RTT x2 exponentially
+2. sshtresh(slow start threshold)
+  + by OS
+  + loss event
+3. **CA**(Congestion Avoidance): AIMD(Addictive Increase Multiplicative Decrease)
+  + 1RTT 1MSS linearly
+5. threshold
+  + timeout : 1 MSS (TCP Tahoe)
+  + 3 dup ACKs : 1/2 MSS  (TCP RENO)
+6. TCP Reno or Tahoe
+
+## TCP performance
+
+1. avg TCP throughput = 3/4 *W/RTT* bytes/sec
+  + W = avg. cwnd
+2. TCP **Fair**ness
+  + scope:1 <-> decrease in half => equal bandwidth share
+
+##### Chp 4 Network Layer
+
+# 4.1 Overview of Network layer
+
+* segment --(encapsulation)-> datagram --(decapsulation)-> segment
+* protocol in host and **router**
+
+## 2 functions in Router
+
+1. [control plane]()
+  + in **routing** processor
+    - calc a path by routing algorithms by routing protocols -> send just made forwarding table to input port
+    - SW, speed↓
+
+2. [data plane]()
+  + in switching fabric
+    - **forwarding** packets by forwarding table by IP protocols, from input port to output port 
+    - HW, speed↑
+
+## 2 service models
+
+for guaranteed delivery
+
+1. for individual datagrams: time delay
+2. for a flow of datagrams: in-order / min bandwidth / arrival time spacing
+
+# 4.2 Data Plane - overview
+
+||input port|output port|
+|---|---|---|
+|physical<->link<->network|switch fabric -> frame -> frame(∋header) -> datagram -> input link | switch fabric -> datagram -> frame(∋header) -> frame -> output link
+|why buffering? when queueing?|input line speed > switch fabric speed<br/>HOL(Head Of the Line) blocking|switch fabric speed > output line speed|
+|how?|switching?<br/>1. memory: 2bus, speed⇓<br/>2. Bus: 1bus, speed↓<br/>3. Crossbar: 0bus, speed↑|scheduling?<br/>1. FIFO: drop tail/priority/random <br/>2. priority <br/>3. RR: fair <br/>4. WFQ(weighted fair queueing): RR+priority|
+
+* bus : cannot forward simultaneously
+* crossbar: via interconnection network
+
+# 4.3 Data Plane - how?
+
+Internet Protocol 
+
+## IP address
+
+**interface** between host/router <-> link
+
+* ex. WiFi, LAN 
+
+## IP datagram format
+
+<img src="./img/datagram.jpg" height="200">
+
+## IPv4
+
+### fragmentation -> reassembly
+
+* src: fragmentation ∝ MTU of each network links
+* dest: reassemble by  1. ID 2.fragflag=0 (last) 3.fragment offset (data bytes #/8)
+
+### addressing
+
+32bit IP Address = same **subnet** part + diff **host** part
+
+* subnet = a group of interfaces who don't need router to identify = all - routers
+1. address classes
+  + A=0__(7)__ , B=10__(14)__ , C=110__(21)__
+  + subnet mask: 255.255.255.0/24
+2. **subnetting**
+  + network ID + subnet ID + host ID
+3. **CIDR** (Classless Inter Domain Routing)
+  + fixed: by admin
+  + dynamic: **DHCP** (Dynamic Host Configuration Protocol)
+    - w/ *plug and play*
+    - by yiaddrr via *DHCP server* 
+    - to get *its address, first hop address, DNS server address*
+4. **NAT**(Network Address Translation)
+  + *1* Public (WAN) <---(router: NAT)---> 多 Private (LAN) 多 segment *port*
+  + by mapping entry in NAT translation table 
+
+## IPv6
+
+128bit IP Address 
+
+### IPv6 -> IPv4
+
+**tunneling**: IPv6 datagram -> IPv4 payload
 
 ##### Chp 5 Network Layer2 : control plane
 
-# 5.1 Introduction
-# 5.3 intra-AS routing in the Internet: OSPF
+# 4.4 Control Plane - overview
 
-# 5.4 routing among the ISPs: BGP
+1. traditional: each router, interact, each forwarding table
+2. SDN(Software Defined Network): one remoter controller, no interact, each local Control Agency
 
-# 5.5 The SDN control plane
+# 4.5 Control Plane - traditional way
 
-# 5.6 ICMP: The Internet Control Message Protocol
+## Link State routing algorithm 
 
+* global routing algorithm
+* update LSA(Link State Advertisement) according to Dijkstra's algorithm
+  + when neighbor change / LSA change / Periodically 
+  + D(v) = min(D(v), D(w)+c(w, v))
+  + but oscillations possible
+
+## Distance Vector algorithm
+
+* decentralized routing algorithm
+
+(Bellman-Ford equation)
+
+# 4.4 Control Plane - Internet
+
+* OSPF(Open Shortest Path First) : intra-AS routing
+
+􀂄 Link State algorithm
+
+* RIP(routing information protocol) : intra-AS routing
+
+􀂄 Distance Vector algorithm
+
+* BGP(Border Gateway Protocol) : inter-AS routing
+
+􀂄 Path Vector
+
+##### Chp 6 Physical Layer, Link Layer
+
+# 6.1 Physical Layer
+
+# 6.2 Data Link Layer
+
+# 6.3 Multiple access protocol
